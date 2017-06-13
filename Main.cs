@@ -10,12 +10,6 @@ namespace HeatMap
             Instance = this;
         }
 
-        public override void MapLoaded(Map map)
-        {
-            base.MapLoaded(map);
-            heatMap = new HeatMap(map);
-        }
-
         public HeatMap GetHeatMap()
         {
             return heatMap;
@@ -27,6 +21,6 @@ namespace HeatMap
 
         public override string ModIdentifier => "HeatMap";
 
-        private HeatMap heatMap;
+        private readonly HeatMap heatMap = new HeatMap();
     }
 }

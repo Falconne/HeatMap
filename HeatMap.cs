@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace HeatMap
@@ -7,20 +8,14 @@ namespace HeatMap
     {
         private CellBoolDrawer _drawerInt;
 
-        private readonly Map _map;
-
-        public HeatMap(Map map)
-        {
-            _map = map;
-        }
-
         public CellBoolDrawer Drawer
         {
             get
             {
                 if (_drawerInt == null)
                 {
-                    _drawerInt = new CellBoolDrawer(this, _map.Size.x, _map.Size.z, 0.33f);
+                    var map = Find.VisibleMap;
+                    _drawerInt = new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.33f);
                 }
                 return _drawerInt;
             }
@@ -28,7 +23,14 @@ namespace HeatMap
 
         public bool GetCellBool(int index)
         {
-            return true;
+            var map = Find.VisibleMap;
+            if (map.fogGrid.IsFogged(index))
+                return false;
+
+            var room = map.cellIndices.IndexToCell(index).GetRoom(
+                map, RegionType.Set_All);
+
+            return room != null && room.Role != RoomRoleDefOf.None;
         }
 
         public Color GetCellExtraColor(int index)
@@ -46,7 +48,7 @@ namespace HeatMap
 
         public void Update()
         {
-            if (_map != null)
+            if (true)
             {
                 this.Drawer.MarkForDraw();
             }
