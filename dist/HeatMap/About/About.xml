@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Heat Map</name>
+  <author>Falconne</author>
+  <description>Adds an overlay toggle button to show a temperature based colour overlay over indoor areas; darker blues for colder rooms and darker reds for hotter ones.</description>
+  <targetVersion>0.17.1557</targetVersion>
+</ModMetaData>
