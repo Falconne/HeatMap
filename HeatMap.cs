@@ -30,7 +30,7 @@ namespace HeatMap
             var room = map.cellIndices.IndexToCell(index).GetRoom(
                 map, RegionType.Set_All);
 
-            return room != null && room.Role != RoomRoleDefOf.None;
+            return room != null && !room.PsychologicallyOutdoors;
         }
 
         public Color GetCellExtraColor(int index)
