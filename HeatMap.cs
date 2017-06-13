@@ -3,7 +3,7 @@ using Verse;
 
 namespace HeatMap
 {
-    internal class HeatMap : ICellBoolGiver
+    public class HeatMap : ICellBoolGiver
     {
         private CellBoolDrawer _drawerInt;
 
@@ -44,5 +44,13 @@ namespace HeatMap
             }
         }
 
+        public void Update()
+        {
+            if (_map != null)
+            {
+                this.Drawer.MarkForDraw();
+            }
+            this.Drawer.CellBoolDrawerUpdate();
+        }
     }
 }

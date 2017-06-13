@@ -16,6 +16,11 @@ namespace HeatMap
             heatMap = new HeatMap(map);
         }
 
+        public HeatMap GetHeatMap()
+        {
+            return heatMap;
+        }
+
         internal new ModLogger Logger => base.Logger;
 
         internal static Main Instance { get; private set; }
