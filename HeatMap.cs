@@ -66,8 +66,8 @@ namespace HeatMap
 
         private FloatRange _comfortableTemperatureRange;
 
-        private readonly float _minHandledTemperature = -100f;
+        private readonly float _minHandledTemperature = -20f;
 
-        private readonly float _maxHandledTemperature = 100f;
+        private readonly float _maxHandledTemperature = 50f;
     }
 }
