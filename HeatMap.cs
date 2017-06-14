@@ -8,11 +8,43 @@ namespace HeatMap
     {
         public HeatMap()
         {
-            _comfortableTemperatureRange = new FloatRange(
-                ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin, null),
-                ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax, null));
+            var minComfortTemp = (int) ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin);
+            var maxComfortTemp = (int) ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax);
+            var comfortRange = maxComfortTemp - minComfortTemp;
+            Main.Instance.Logger.Message($"Comfort range is {comfortRange}");
+            _mappedTemperatureRange = new IntRange(minComfortTemp - comfortRange, maxComfortTemp + comfortRange);
+            Main.Instance.Logger.Message($"Mapped range is {_mappedTemperatureRange}");
 
-            Main.Instance.Logger.Message("Comfort: " + _comfortableTemperatureRange);
+            var mappedColorCount = _mappedTemperatureRange.max - _mappedTemperatureRange.min;
+            Main.Instance.Logger.Message($"mappedColorCount is {mappedColorCount}");
+            _mappedColors = new Color[mappedColorCount];
+
+            var channelDelta = 2f / mappedColorCount;
+            var channelR = -2f;
+            var channelG = 0f;
+            var channelB = 2f;
+            var greenRising = true;
+
+            for (var i = 0; i < mappedColorCount; i++)
+            {
+                var realR = Mathf.Min(channelR, 1f);
+                realR = Mathf.Max(channelR, 0f);
+
+                var realG = Mathf.Min(channelG, 1f);
+                realG = Mathf.Max(channelG, 0f);
+
+                var realB = Mathf.Min(channelB, 1f);
+                realB = Mathf.Max(channelB, 0f);
+
+                _mappedColors[i] = new Color(realR, realB, realG);
+
+                if (channelG >= 1f)
+                    greenRising = false;
+
+                channelR += channelDelta;
+                channelG += greenRising ? channelDelta : -channelDelta;
+                channelB -= channelDelta;
+            }
         }
 
         public CellBoolDrawer Drawer
@@ -22,7 +54,7 @@ namespace HeatMap
                 if (_drawerInt == null)
                 {
                     var map = Find.VisibleMap;
-                    _drawerInt = new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.33f);
+                    _drawerInt = new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.22f);
                 }
                 return _drawerInt;
             }
@@ -64,10 +96,8 @@ namespace HeatMap
 
         private CellBoolDrawer _drawerInt;
 
-        private FloatRange _comfortableTemperatureRange;
+        private IntRange _mappedTemperatureRange;
 
-        private readonly float _minHandledTemperature = -20f;
-
-        private readonly float _maxHandledTemperature = 50f;
+        private Color[] _mappedColors;
     }
 }
