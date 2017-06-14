@@ -11,12 +11,9 @@ namespace HeatMap
             var minComfortTemp = (int) ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin);
             var maxComfortTemp = (int) ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax);
             var comfortRange = maxComfortTemp - minComfortTemp;
-            Main.Instance.Logger.Message($"Comfort range is {comfortRange}");
             _mappedTemperatureRange = new IntRange(minComfortTemp - comfortRange, maxComfortTemp + comfortRange);
-            Main.Instance.Logger.Message($"Mapped range is {_mappedTemperatureRange}");
 
             var mappedColorCount = _mappedTemperatureRange.max - _mappedTemperatureRange.min;
-            Main.Instance.Logger.Message($"mappedColorCount is {mappedColorCount}");
             _mappedColors = new Color[mappedColorCount];
 
             var channelDelta = 2f / mappedColorCount;
@@ -69,20 +66,43 @@ namespace HeatMap
             var room = map.cellIndices.IndexToCell(index).GetRoom(
                 map, RegionType.Set_All);
 
-            return room != null && !room.PsychologicallyOutdoors;
+            if (room != null && !room.PsychologicallyOutdoors)
+            {
+                if (room.Temperature <= _mappedTemperatureRange.min)
+                {
+                    _nextColor = _mappedColors[0];
+                }
+                else if (room.Temperature >= _mappedTemperatureRange.max)
+                {
+                    _nextColor = _mappedColors[_mappedColors.Length - 1];
+                }
+                else
+                {
+                    var colorMapIndex = (int) room.Temperature - _mappedTemperatureRange.min;
+                    if (colorMapIndex <= 0)
+                    {
+                        colorMapIndex = 0;
+                    }
+                    else if (colorMapIndex >= _mappedColors.Length)
+                    {
+                        colorMapIndex = _mappedColors.Length;
+                    }
+                    _nextColor = _mappedColors[colorMapIndex];
+                }
+                return true;
+            }
+
+            return false;
         }
 
         public Color GetCellExtraColor(int index)
         {
-            return Color.white;
+            return _nextColor;
         }
 
         public Color Color
         {
-            get
-            {
-                return new Color(0.3f, 1f, 0.4f);
-            }
+            get { return Color.white; }
         }
 
         public void Update()
@@ -99,5 +119,7 @@ namespace HeatMap
         private IntRange _mappedTemperatureRange;
 
         private Color[] _mappedColors;
+
+        private Color _nextColor;
     }
 }
