@@ -11,8 +11,8 @@ namespace HeatMap
         {
             var minComfortTemp = (int) ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin);
             var maxComfortTemp = (int) ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax);
-            var comfortRange = maxComfortTemp - minComfortTemp;
-            _mappedTemperatureRange = new IntRange(minComfortTemp - comfortRange, maxComfortTemp + comfortRange);
+            var comfortHalfRange = (maxComfortTemp - minComfortTemp) / 2;
+            _mappedTemperatureRange = new IntRange(minComfortTemp - comfortHalfRange, maxComfortTemp + comfortHalfRange);
 
             var mappedColorCount = _mappedTemperatureRange.max - _mappedTemperatureRange.min;
             _mappedColors = new Color[mappedColorCount];
@@ -34,8 +34,7 @@ namespace HeatMap
                 var realB = Math.Min(channelB, 1f);
                 realB = Math.Max(realB, 0f);
 
-                _mappedColors[i] = new Color(realR, realB, realG);
-                Main.Instance.Logger.Message($"[{i}] => {realR}, {realG}, {realB}");
+                _mappedColors[i] = new Color(realR, realG, realB);
 
                 if (channelG >= 2f)
                     greenRising = false;
@@ -53,7 +52,7 @@ namespace HeatMap
                 if (_drawerInt == null)
                 {
                     var map = Find.VisibleMap;
-                    _drawerInt = new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.22f);
+                    _drawerInt = new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.33f);
                 }
                 return _drawerInt;
             }
@@ -102,10 +101,7 @@ namespace HeatMap
             return _nextColor;
         }
 
-        public Color Color
-        {
-            get { return Color.white; }
-        }
+        public Color Color => Color.white;
 
         public void Update()
         {
@@ -126,7 +122,7 @@ namespace HeatMap
 
         private IntRange _mappedTemperatureRange;
 
-        private Color[] _mappedColors;
+        private readonly Color[] _mappedColors;
 
         private Color _nextColor;
 
