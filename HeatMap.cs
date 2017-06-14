@@ -9,21 +9,26 @@ namespace HeatMap
     {
         public HeatMap()
         {
-            var minComfortTemp = (int) ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin);
-            var maxComfortTemp = (int) ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax);
-            var comfortHalfRange = (maxComfortTemp - minComfortTemp) / 2;
-            _mappedTemperatureRange = new IntRange(minComfortTemp - comfortHalfRange, maxComfortTemp + comfortHalfRange);
+            var minComfortTemp = (int)ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin) + 4;
+            var maxComfortTemp = (int)ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax) - 4;
+
+            // Narrow down the green range to a quarter scale, to make boundary temps stand out more.
+
+            var comfortDoubleRange = (maxComfortTemp - minComfortTemp) * 2;
+            _mappedTemperatureRange = new IntRange(
+                minComfortTemp - comfortDoubleRange, maxComfortTemp + comfortDoubleRange);
 
             var mappedColorCount = _mappedTemperatureRange.max - _mappedTemperatureRange.min;
             _mappedColors = new Color[mappedColorCount];
 
-            var channelDelta = 4f / mappedColorCount;
+            var channelDelta = 1f / comfortDoubleRange;
             var channelR = -2f;
             var channelG = 0f;
             var channelB = 2f;
             var greenRising = true;
 
-            for (var i = 0; i < mappedColorCount; i++)
+            var mappingTemperature = _mappedTemperatureRange.min;
+            for (var i = 0; i < mappedColorCount; i++, mappingTemperature++)
             {
                 var realR = Math.Min(channelR, 1f);
                 realR = Math.Max(realR, 0f);
@@ -36,12 +41,21 @@ namespace HeatMap
 
                 _mappedColors[i] = new Color(realR, realG, realB);
 
+                Main.Instance.Logger.Message($"[{i}] ({mappingTemperature}) {realR}, {realG}, {realB}");
+
                 if (channelG >= 2f)
                     greenRising = false;
 
-                channelR += channelDelta;
-                channelG += greenRising ? channelDelta : -channelDelta;
-                channelB -= channelDelta;
+                var delta = channelDelta;
+                if (mappingTemperature >= minComfortTemp - 1 &&
+                    mappingTemperature <= maxComfortTemp)
+                {
+                    delta *= 4;
+                }
+
+                channelR += delta;
+                channelG += greenRising ? delta : -delta;
+                channelB -= delta;
             }
         }
 
@@ -79,7 +93,7 @@ namespace HeatMap
                 }
                 else
                 {
-                    var colorMapIndex = (int) room.Temperature - _mappedTemperatureRange.min;
+                    var colorMapIndex = (int)room.Temperature - _mappedTemperatureRange.min;
                     if (colorMapIndex <= 0)
                     {
                         colorMapIndex = 0;
