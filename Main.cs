@@ -10,9 +10,12 @@ namespace HeatMap
             Instance = this;
         }
 
-        public HeatMap GetHeatMap()
+        public void UpdateHeatMap()
         {
-            return heatMap;
+            if (_heatMap == null)
+                _heatMap = new HeatMap();
+
+            _heatMap.Update();
         }
 
         internal new ModLogger Logger => base.Logger;
@@ -21,6 +24,6 @@ namespace HeatMap
 
         public override string ModIdentifier => "HeatMap";
 
-        private readonly HeatMap heatMap = new HeatMap();
+        private HeatMap _heatMap;
     }
 }

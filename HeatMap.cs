@@ -6,7 +6,14 @@ namespace HeatMap
 {
     public class HeatMap : ICellBoolGiver
     {
-        private CellBoolDrawer _drawerInt;
+        public HeatMap()
+        {
+            _comfortableTemperatureRange = new FloatRange(
+                ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin, null),
+                ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax, null));
+
+            Main.Instance.Logger.Message("Comfort: " + _comfortableTemperatureRange);
+        }
 
         public CellBoolDrawer Drawer
         {
@@ -54,5 +61,13 @@ namespace HeatMap
             }
             this.Drawer.CellBoolDrawerUpdate();
         }
+
+        private CellBoolDrawer _drawerInt;
+
+        private FloatRange _comfortableTemperatureRange;
+
+        private readonly float _minHandledTemperature = -100f;
+
+        private readonly float _maxHandledTemperature = 100f;
     }
 }

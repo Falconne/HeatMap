@@ -16,7 +16,7 @@ namespace HeatMap
                 return;
             }
 
-            Main.Instance.GetHeatMap().Update();
+            Main.Instance.UpdateHeatMap();
         }
     }
 }
