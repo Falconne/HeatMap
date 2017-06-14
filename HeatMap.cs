@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using System;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -16,7 +17,7 @@ namespace HeatMap
             var mappedColorCount = _mappedTemperatureRange.max - _mappedTemperatureRange.min;
             _mappedColors = new Color[mappedColorCount];
 
-            var channelDelta = 2f / mappedColorCount;
+            var channelDelta = 4f / mappedColorCount;
             var channelR = -2f;
             var channelG = 0f;
             var channelB = 2f;
@@ -24,18 +25,19 @@ namespace HeatMap
 
             for (var i = 0; i < mappedColorCount; i++)
             {
-                var realR = Mathf.Min(channelR, 1f);
-                realR = Mathf.Max(channelR, 0f);
+                var realR = Math.Min(channelR, 1f);
+                realR = Math.Max(realR, 0f);
 
-                var realG = Mathf.Min(channelG, 1f);
-                realG = Mathf.Max(channelG, 0f);
+                var realG = Math.Min(channelG, 1f);
+                realG = Math.Max(realG, 0f);
 
-                var realB = Mathf.Min(channelB, 1f);
-                realB = Mathf.Max(channelB, 0f);
+                var realB = Math.Min(channelB, 1f);
+                realB = Math.Max(realB, 0f);
 
                 _mappedColors[i] = new Color(realR, realB, realG);
+                Main.Instance.Logger.Message($"[{i}] => {realR}, {realG}, {realB}");
 
-                if (channelG >= 1f)
+                if (channelG >= 2f)
                     greenRising = false;
 
                 channelR += channelDelta;
@@ -109,9 +111,15 @@ namespace HeatMap
         {
             if (true)
             {
-                this.Drawer.MarkForDraw();
+                Drawer.MarkForDraw();
+                var tick = Find.TickManager.TicksGame;
+                if (_nextUpdateTick == 0 || tick >= _nextUpdateTick)
+                {
+                    Drawer.SetDirty();
+                    _nextUpdateTick = tick + 200;
+                }
             }
-            this.Drawer.CellBoolDrawerUpdate();
+            Drawer.CellBoolDrawerUpdate();
         }
 
         private CellBoolDrawer _drawerInt;
@@ -121,5 +129,7 @@ namespace HeatMap
         private Color[] _mappedColors;
 
         private Color _nextColor;
+
+        private int _nextUpdateTick;
     }
 }
