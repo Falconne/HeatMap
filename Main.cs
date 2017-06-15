@@ -1,4 +1,5 @@
 ﻿using HugsLib.Utils;
+using UnityEngine;
 using Verse;
 
 namespace HeatMap
@@ -27,5 +28,6 @@ namespace HeatMap
         public bool ShowHeatMap = false;
 
         private HeatMap _heatMap;
+
     }
 }

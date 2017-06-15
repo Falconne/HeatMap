@@ -13,8 +13,11 @@ namespace HeatMap
             if (worldView)
                 return;
 
-            row.ToggleableIcon(ref Main.Instance.ShowHeatMap, , "Show Heat Map", SoundDefOf.MouseoverToggle, null);
+            if (row == null || Resources.Icon == null)
+                return;
 
+            row.ToggleableIcon(ref Main.Instance.ShowHeatMap, Resources.Icon,
+                "Show Heat Map", SoundDefOf.MouseoverToggle);
         }
     }
 }
