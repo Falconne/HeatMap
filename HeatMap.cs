@@ -9,8 +9,8 @@ namespace HeatMap
     {
         public HeatMap()
         {
-            var minComfortTemp = (int)ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin) + 4;
-            var maxComfortTemp = (int)ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax) - 4;
+            var minComfortTemp = (int)ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin) + 3;
+            var maxComfortTemp = (int)ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax) - 3;
 
             // Narrow down the green range to a quarter scale, to make boundary temps stand out more.
 
@@ -41,7 +41,7 @@ namespace HeatMap
 
                 _mappedColors[i] = new Color(realR, realG, realB);
 
-                Main.Instance.Logger.Message($"[{i}] ({mappingTemperature}) {realR}, {realG}, {realB}");
+                //Main.Instance.Logger.Message($"[{i}] ({mappingTemperature}) {realR}, {realG}, {realB}");
 
                 if (channelG >= 2f)
                     greenRising = false;
@@ -119,7 +119,7 @@ namespace HeatMap
 
         public void Update()
         {
-            if (true)
+            if (Main.Instance.ShowHeatMap)
             {
                 Drawer.MarkForDraw();
                 var tick = Find.TickManager.TicksGame;

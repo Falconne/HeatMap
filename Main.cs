@@ -24,6 +24,8 @@ namespace HeatMap
 
         public override string ModIdentifier => "HeatMap";
 
+        public bool ShowHeatMap = false;
+
         private HeatMap _heatMap;
     }
 }
