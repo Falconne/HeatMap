@@ -55,6 +55,7 @@
     <Compile Include="HeatMap.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="MapInterface_Detour.cs" />
+    <Compile Include="PlaySettings_Detour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
