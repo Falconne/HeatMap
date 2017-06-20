@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <HugsLib.UpdateFeatureDef Abstract="true" Name="UpdateFeatureBase">
+        <modNameReadable>Heat Map</modNameReadable>
+        <modIdentifier>HeatMap</modIdentifier>
+        <linkUrl>https://ludeon.com/forums/index.php?topic=33647.0</linkUrl>
+    </HugsLib.UpdateFeatureDef>
+
+    <HugsLib.UpdateFeatureDef ParentName="UpdateFeatureBase">
+        <defName>HeatMap_0_17_2</defName>
+        <assemblyVersion>0.17.2</assemblyVersion>
+        <content>Changed icon to a thermometer</content>
+    </HugsLib.UpdateFeatureDef>
+</Defs>
