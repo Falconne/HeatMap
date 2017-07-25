@@ -41,8 +41,6 @@ namespace HeatMap
 
                 _mappedColors[i] = new Color(realR, realG, realB);
 
-                //Main.Instance.Logger.Message($"[{i}] ({mappingTemperature}) {realR}, {realG}, {realB}");
-
                 if (channelG >= 2f)
                     greenRising = false;
 
@@ -66,7 +64,8 @@ namespace HeatMap
                 if (_drawerInt == null)
                 {
                     var map = Find.VisibleMap;
-                    _drawerInt = new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.33f);
+                    _drawerInt = new CellBoolDrawer(this, map.Size.x, map.Size.z, 
+                        Main.Instance.GetConfiguredOpacity());
                 }
                 return _drawerInt;
             }
@@ -130,6 +129,12 @@ namespace HeatMap
                 }
             }
             Drawer.CellBoolDrawerUpdate();
+        }
+
+        public void Reset()
+        {
+            _drawerInt = null;
+            _nextUpdateTick = 0;
         }
 
         private CellBoolDrawer _drawerInt;
