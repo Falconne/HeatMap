@@ -20,6 +20,11 @@ namespace HeatMap
             _heatMap.Update();
         }
 
+        public override void WorldLoaded()
+        {
+            _heatMap?.Reset();
+        }
+
         public override void DefsLoaded()
         {
             _opacity = Settings.GetHandle(
@@ -28,11 +33,20 @@ namespace HeatMap
                 Validators.IntRangeValidator(1, 100));
 
             _opacity.OnValueChanged = val => { _heatMap?.Reset(); };
+
+            _updateDelay = Settings.GetHandle("updateDelay", "Update delay",
+                "Number of ticks delay between overlay updates while game is running. Lower numbers will give smoother updates, but may affect performance on low end machines",
+                100, Validators.IntRangeValidator(1, 9999));
         }
 
         public float GetConfiguredOpacity()
         {
             return _opacity / 100f;
+        }
+
+        public int GetUpdateDelay()
+        {
+            return _updateDelay;
         }
 
         internal new ModLogger Logger => base.Logger;
@@ -46,5 +60,7 @@ namespace HeatMap
         private HeatMap _heatMap;
 
         private SettingHandle<int> _opacity;
+
+        private SettingHandle<int> _updateDelay;
     }
 }

@@ -125,7 +125,7 @@ namespace HeatMap
                 if (_nextUpdateTick == 0 || tick >= _nextUpdateTick)
                 {
                     Drawer.SetDirty();
-                    _nextUpdateTick = tick + 100;
+                    _nextUpdateTick = tick + Main.Instance.GetUpdateDelay();
                 }
             }
             Drawer.CellBoolDrawerUpdate();
