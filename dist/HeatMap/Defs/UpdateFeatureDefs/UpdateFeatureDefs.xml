@@ -11,4 +11,10 @@
         <assemblyVersion>0.17.2</assemblyVersion>
         <content>Changed icon to a thermometer</content>
     </HugsLib.UpdateFeatureDef>
+
+    <HugsLib.UpdateFeatureDef ParentName="UpdateFeatureBase">
+        <defName>HeatMap_0_17_3</defName>
+        <assemblyVersion>0.17.3</assemblyVersion>
+        <content>Overlay opacity and update speed can now be configured in Mod Settings dialog.</content>
+    </HugsLib.UpdateFeatureDef>
 </Defs>

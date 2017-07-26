@@ -29,13 +29,13 @@ namespace HeatMap
         {
             _opacity = Settings.GetHandle(
                 "opacity", "Opacity of overlay",
-                "Reduce this value to make the overlay more transparent", 30,
+                "Reduce this value to make the overlay more transparent.", 30,
                 Validators.IntRangeValidator(1, 100));
 
             _opacity.OnValueChanged = val => { _heatMap?.Reset(); };
 
             _updateDelay = Settings.GetHandle("updateDelay", "Update delay",
-                "Number of ticks delay between overlay updates while game is running. Lower numbers will give smoother updates, but may affect performance on low end machines",
+                "Number of ticks delay between overlay updates while game is unpaused. Lower numbers provide smoother updates, but may affect performance on low end machines.",
                 100, Validators.IntRangeValidator(1, 9999));
         }
 
