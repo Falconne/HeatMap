@@ -17,4 +17,10 @@
         <assemblyVersion>0.17.3</assemblyVersion>
         <content>Overlay opacity and update speed can now be configured in Mod Settings dialog.</content>
     </HugsLib.UpdateFeatureDef>
+
+    <HugsLib.UpdateFeatureDef ParentName="UpdateFeatureBase">
+        <defName>HeatMap_0_17_4</defName>
+        <assemblyVersion>0.17.4</assemblyVersion>
+        <content>The overlay can now be toggled on and off with a keyboard shortcut. The default keybinding is \ (backslash). This can be changed in the 'Keyboard configuration' menu in Options.</content>
+    </HugsLib.UpdateFeatureDef>
 </Defs>

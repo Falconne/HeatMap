@@ -1,10 +1,18 @@
 ﻿using HugsLib.Settings;
 using HugsLib.Utils;
+using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
 namespace HeatMap
 {
+    [DefOf]
+    public static class HeatMapKeyBingings
+    {
+        public static KeyBindingDef ToggleHeatMap;
+    }
+
     public class Main : HugsLib.ModBase
     {
         public Main()
@@ -18,6 +26,24 @@ namespace HeatMap
                 _heatMap = new HeatMap();
 
             _heatMap.Update();
+        }
+
+        public override void OnGUI()
+        {
+            if (Current.ProgramState != ProgramState.Playing || Event.current.type != EventType.KeyDown
+                || Event.current.keyCode == KeyCode.None || Find.VisibleMap == null)
+            {
+                return;
+            }
+
+            if (HeatMapKeyBingings.ToggleHeatMap.JustPressed)
+            {
+                if (WorldRendererUtility.WorldRenderedNow)
+                {
+                    return;
+                }
+                ShowHeatMap = !ShowHeatMap;
+            }
         }
 
         public override void WorldLoaded()
@@ -55,7 +81,7 @@ namespace HeatMap
 
         public override string ModIdentifier => "HeatMap";
 
-        public bool ShowHeatMap = false;
+        public bool ShowHeatMap;
 
         private HeatMap _heatMap;
 

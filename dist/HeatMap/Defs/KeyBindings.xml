@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<KeyBindingDefs>
+
+	<KeyBindingDef>
+		<category>HeatMap</category>
+		<defName>ToggleHeatMap</defName>
+		<label>Toggle heat map overlay</label>
+        <defaultKeyCodeA>Backslash</defaultKeyCodeA>
+	</KeyBindingDef>
+</KeyBindingDefs>
