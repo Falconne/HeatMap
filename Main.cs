@@ -53,6 +53,14 @@ namespace HeatMap
             Text.Anchor = TextAnchor.MiddleCenter;
             GUI.color = Color.white;
             Widgets.Label(outRect, temperatureForDisplay);
+
+            if (Widgets.ButtonInvisible(outRect))
+            {
+                ShowHeatMap = !ShowHeatMap;
+            }
+            TooltipHandler.TipRegion(outRect, "FALCHM.ThermometerTooltip".Translate());
+
+
             Text.Anchor = TextAnchor.UpperLeft;
         }
 
