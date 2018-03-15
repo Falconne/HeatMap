@@ -82,31 +82,39 @@ namespace HeatMap
 
             if (room != null && !room.PsychologicallyOutdoors)
             {
-                if (room.Temperature <= _mappedTemperatureRange.min)
-                {
-                    _nextColor = _mappedColors[0];
-                }
-                else if (room.Temperature >= _mappedTemperatureRange.max)
-                {
-                    _nextColor = _mappedColors[_mappedColors.Length - 1];
-                }
-                else
-                {
-                    var colorMapIndex = (int)room.Temperature - _mappedTemperatureRange.min;
-                    if (colorMapIndex <= 0)
-                    {
-                        colorMapIndex = 0;
-                    }
-                    else if (colorMapIndex >= _mappedColors.Length)
-                    {
-                        colorMapIndex = _mappedColors.Length;
-                    }
-                    _nextColor = _mappedColors[colorMapIndex];
-                }
+                _nextColor = GetColorForTemperature(room.Temperature);
                 return true;
             }
 
             return false;
+        }
+
+        public Color GetColorForTemperature(float temperature)
+        {
+            // These two checks are probably not needed due to array index boundary checks
+            // below, but too worried to remove them now.
+            if (temperature <= _mappedTemperatureRange.min)
+            {
+                return _mappedColors[0];
+            }
+
+            if (temperature >= _mappedTemperatureRange.max)
+            {
+                return _mappedColors[_mappedColors.Length - 1];
+            }
+
+            var colorMapIndex = (int)temperature - _mappedTemperatureRange.min;
+            if (colorMapIndex <= 0)
+            {
+                return _mappedColors[0];
+            }
+
+            if (colorMapIndex >= _mappedColors.Length)
+            {
+                return _mappedColors[_mappedColors.Length - 1];
+            }
+
+            return _mappedColors[colorMapIndex];
         }
 
         public Color GetCellExtraColor(int index)

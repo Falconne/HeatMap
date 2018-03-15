@@ -28,10 +28,26 @@ namespace HeatMap
             _heatMap.Update();
         }
 
+        public void UpdateOutdoorThermometer()
+        {
+            if (_outdoorThermometer == null)
+                _outdoorThermometer = new OutdoorThermometer();
+
+            _outdoorThermometer.Update(_heatMap, _outdoorThermometerOpacity / 100f);
+        }
+
         public override void OnGUI()
         {
-            if (Current.ProgramState != ProgramState.Playing || Event.current.type != EventType.KeyDown
-                || Event.current.keyCode == KeyCode.None || Find.VisibleMap == null)
+            if (Current.ProgramState != ProgramState.Playing || Find.VisibleMap == null
+                || WorldRendererUtility.WorldRenderedNow)
+            {
+                return;
+            }
+
+            if (_showOutdoorThermometer)
+                UpdateOutdoorThermometer();
+
+            if (Event.current.type != EventType.KeyDown || Event.current.keyCode == KeyCode.None)
             {
                 return;
             }
@@ -63,6 +79,15 @@ namespace HeatMap
             _updateDelay = Settings.GetHandle("updateDelay", "Update delay",
                 "Number of ticks delay between overlay updates while game is unpaused. Lower numbers provide smoother updates, but may affect performance on low end machines.",
                 100, Validators.IntRangeValidator(1, 9999));
+
+            _showOutdoorThermometer = Settings.GetHandle(
+                "showOutdoorThermometer", "Show outdoor thermometer",
+                "Displays outdoor temperature in a distinct box on the top right hand corner of the UI", true);
+
+            _outdoorThermometerOpacity = Settings.GetHandle(
+                "outdoorThermometerOpacity", "Opacity of thermometer",
+                "Reduce this value to make the outdoor temperature thermometer background color more transparent.", 30,
+                Validators.IntRangeValidator(1, 100));
         }
 
         public float GetConfiguredOpacity()
@@ -85,8 +110,14 @@ namespace HeatMap
 
         private HeatMap _heatMap;
 
+        private OutdoorThermometer _outdoorThermometer;
+
         private SettingHandle<int> _opacity;
 
         private SettingHandle<int> _updateDelay;
+
+        private SettingHandle<bool> _showOutdoorThermometer;
+
+        private SettingHandle<int> _outdoorThermometerOpacity;
     }
 }

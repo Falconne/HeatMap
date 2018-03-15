@@ -45,6 +45,7 @@
     <Compile Include="HeatMap.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="MapInterface_Detour.cs" />
+    <Compile Include="OutdoorThermometer.cs" />
     <Compile Include="PlaySettings_Detour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.cs" />
