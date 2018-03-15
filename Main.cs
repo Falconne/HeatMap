@@ -30,6 +30,9 @@ namespace HeatMap
 
         public void UpdateOutdoorThermometer()
         {
+            if (!_showOutdoorThermometer)
+                return;
+
             if (_heatMap == null)
                 return;
 
@@ -51,7 +54,6 @@ namespace HeatMap
             GUI.color = Color.white;
             Widgets.Label(outRect, temperatureForDisplay);
             Text.Anchor = TextAnchor.UpperLeft;
-
         }
 
         public override void OnGUI()
@@ -62,8 +64,7 @@ namespace HeatMap
                 return;
             }
 
-            if (_showOutdoorThermometer)
-                UpdateOutdoorThermometer();
+            UpdateOutdoorThermometer();
 
             if (Event.current.type != EventType.KeyDown || Event.current.keyCode == KeyCode.None)
             {
@@ -88,23 +89,23 @@ namespace HeatMap
         public override void DefsLoaded()
         {
             _opacity = Settings.GetHandle(
-                "opacity", "Opacity of overlay",
-                "Reduce this value to make the overlay more transparent.", 30,
+                "opacity", "FALCHM.OverlayOpacity".Translate(),
+                "FALCHM.OverlayOpacityDesc".Translate(), 30,
                 Validators.IntRangeValidator(1, 100));
 
             _opacity.OnValueChanged = val => { _heatMap?.Reset(); };
 
-            _updateDelay = Settings.GetHandle("updateDelay", "Update delay",
-                "Number of ticks delay between overlay updates while game is unpaused. Lower numbers provide smoother updates, but may affect performance on low end machines.",
+            _updateDelay = Settings.GetHandle("updateDelay", "FALCHM.UpdateDelay".Translate(),
+                "FALCHM.UpdateDelayDesc".Translate(),
                 100, Validators.IntRangeValidator(1, 9999));
 
             _showOutdoorThermometer = Settings.GetHandle(
-                "showOutdoorThermometer", "Show outdoor thermometer",
-                "Displays outdoor temperature in a distinct box on the top right hand corner of the UI", true);
+                "showOutdoorThermometer", "FALCHM.ShowOutDoorThermometer".Translate(),
+                "FALCHM.ShowOutDoorThermometerDesc".Translate(), true);
 
             _outdoorThermometerOpacity = Settings.GetHandle(
-                "outdoorThermometerOpacity", "Opacity of thermometer",
-                "Reduce this value to make the outdoor temperature thermometer background color more transparent.", 30,
+                "outdoorThermometerOpacity", "FALCHM.ThermometerOpacity".Translate(),
+                "FALCHM.ThermometerOpacityDesc".Translate(), 30,
                 Validators.IntRangeValidator(1, 100));
         }
 

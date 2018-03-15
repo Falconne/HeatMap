@@ -49,6 +49,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="dist\HeatMap\About\About.xml" />
+    <Content Include="dist\HeatMap\About\Version.xml" />
+    <Content Include="dist\HeatMap\Defs\KeyBindingCategoryDefs\KeyBindingCategories.xml" />
+    <Content Include="dist\HeatMap\Defs\KeyBindings.xml" />
+    <Content Include="dist\HeatMap\Defs\UpdateFeatureDefs\UpdateFeatureDefs.xml" />
+    <Content Include="dist\HeatMap\Languages\English\Keyed\FALCHM_LanguageData.xml" />
+    <Content Include="dist\HeatMap\Textures\DisplayBorder.png" />
+    <Content Include="dist\HeatMap\Textures\HeatMap.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>if not exist $(ProjectDir)ThirdParty mkdir  $(ProjectDir)ThirdParty

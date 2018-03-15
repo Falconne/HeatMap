@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <FALCHM.OverlayOpacity>Opacity of overlay</FALCHM.OverlayOpacity>
+  <FALCHM.OverlayOpacityDesc>Reduce this value to make the overlay more transparent.</FALCHM.OverlayOpacityDesc>
+
+  <FALCHM.UpdateDelay>Overlay update delay</FALCHM.UpdateDelay>
+  <FALCHM.UpdateDelayDesc>Number of ticks delay between overlay updates while game is unpaused. Lower numbers provide smoother updates, but may affect performance on low end machines.</FALCHM.UpdateDelayDesc>
+
+  <FALCHM.ShowOutDoorThermometer>Show outdoor thermometer</FALCHM.ShowOutDoorThermometer>
+  <FALCHM.ShowOutDoorThermometerDesc>Displays outdoor temperature in a distinct box on the top right hand corner of the UI</FALCHM.ShowOutDoorThermometerDesc>
+
+  <FALCHM.ThermometerOpacity>Opacity of thermometer</FALCHM.ThermometerOpacity>
+  <FALCHM.ThermometerOpacityDesc>Reduce this value to make the outdoor temperature thermometer background color more transparent.</FALCHM.ThermometerOpacityDesc>
+</LanguageData>
