@@ -30,10 +30,28 @@ namespace HeatMap
 
         public void UpdateOutdoorThermometer()
         {
-            if (_outdoorThermometer == null)
-                _outdoorThermometer = new OutdoorThermometer();
+            if (_heatMap == null)
+                return;
 
-            _outdoorThermometer.Update(_heatMap, _outdoorThermometerOpacity / 100f);
+            const float boxSize = 62f;
+            var horizontalOffset = 8f;
+            if (Prefs.AdaptiveTrainingEnabled)
+                horizontalOffset += 216f;
+
+            var outRect = new Rect(UI.screenWidth - horizontalOffset - boxSize, 8f, boxSize, boxSize);
+            var temperature = Find.VisibleMap.mapTemperature.OutdoorTemp;
+            var backColor = _heatMap.GetColorForTemperature(temperature);
+            backColor.a = _outdoorThermometerOpacity / 100f;
+            GUI.DrawTexture(outRect, SolidColorMaterials.NewSolidColorTexture(backColor));
+            GUI.DrawTexture(outRect, Resources.DisplayBoder);
+
+            var temperatureForDisplay = temperature.ToStringTemperature("F0");
+            Text.Font = GameFont.Medium;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            GUI.color = Color.white;
+            Widgets.Label(outRect, temperatureForDisplay);
+            Text.Anchor = TextAnchor.UpperLeft;
+
         }
 
         public override void OnGUI()
@@ -109,8 +127,6 @@ namespace HeatMap
         public bool ShowHeatMap;
 
         private HeatMap _heatMap;
-
-        private OutdoorThermometer _outdoorThermometer;
 
         private SettingHandle<int> _opacity;
 
