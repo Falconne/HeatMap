@@ -23,4 +23,10 @@
         <assemblyVersion>0.17.4</assemblyVersion>
         <content>The overlay can now be toggled on and off with a keyboard shortcut. The default keybinding is \ (backslash). This can be changed in the 'Keyboard configuration' menu in Options.</content>
     </HugsLib.UpdateFeatureDef>
+
+  <HugsLib.UpdateFeatureDef ParentName="UpdateFeatureBase">
+    <defName>HeatMap_0_18_2</defName>
+    <assemblyVersion>0.18.2</assemblyVersion>
+    <content>A thermometer widget has been added to the top right hand corner of the UI, displaying the current outdoor temperature (shaded with the same color scheme as the overlay). This can be disabled in Mod Settings. Clicking this widget also toggles the heat map overlay.</content>
+  </HugsLib.UpdateFeatureDef>
 </Defs>
