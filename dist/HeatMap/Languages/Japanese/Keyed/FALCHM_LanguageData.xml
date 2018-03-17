@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <FALCHM.OverlayOpacity>オーバーレイの不透明度</FALCHM.OverlayOpacity>
+  <FALCHM.OverlayOpacityDesc>オーバーレイをより透明にするには、この値を減らします。</FALCHM.OverlayOpacityDesc>
+
+  <FALCHM.UpdateDelay>オーバーレイ更新遅延</FALCHM.UpdateDelay>
+  <FALCHM.UpdateDelayDesc>ゲームが一時停止されていない間のオーバーレイ更新間隔の遅延時間。数字が小さいほどスムーズな更新が可能ですが、低スペックPCのパフォーマンスに影響する可能性があります。</FALCHM.UpdateDelayDesc>
+
+  <FALCHM.ShowOutDoorThermometer>屋外温度を表示</FALCHM.ShowOutDoorThermometer>
+  <FALCHM.ShowOutDoorThermometerDesc>UI画面の右上に現在の屋外温度を表示するウィジェット(widget/小型表示)を表示します。</FALCHM.ShowOutDoorThermometerDesc>
+
+  <FALCHM.ThermometerOpacity>温度計の不透明度</FALCHM.ThermometerOpacity>
+  <FALCHM.ThermometerOpacityDesc>屋外温度の温度計の背景色をより透明にするには、この値を減らします。</FALCHM.ThermometerOpacityDesc>
+
+  <FALCHM.ThermometerTooltip>屋外温度。クリックすると、ヒートマップのオーバーレイを切り替えます。このウィジェット(widget/小型表示)はMod設定で無効にすることができます。</FALCHM.ThermometerTooltip>
+
+</LanguageData>
