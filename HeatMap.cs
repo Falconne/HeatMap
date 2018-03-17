@@ -89,32 +89,38 @@ namespace HeatMap
             return false;
         }
 
-        public Color GetColorForTemperature(float temperature)
+        public int GetIndexForTemperature(float temperature)
         {
             // These two checks are probably not needed due to array index boundary checks
             // below, but too worried to remove them now.
             if (temperature <= _mappedTemperatureRange.min)
             {
-                return _mappedColors[0];
+                return 0;
             }
 
             if (temperature >= _mappedTemperatureRange.max)
             {
-                return _mappedColors[_mappedColors.Length - 1];
+                return _mappedColors.Length - 1;
             }
 
             var colorMapIndex = (int)temperature - _mappedTemperatureRange.min;
             if (colorMapIndex <= 0)
             {
-                return _mappedColors[0];
+                return 0;
             }
 
             if (colorMapIndex >= _mappedColors.Length)
             {
-                return _mappedColors[_mappedColors.Length - 1];
+                return _mappedColors.Length - 1;
             }
 
-            return _mappedColors[colorMapIndex];
+            return colorMapIndex;
+
+        }
+
+        public Color GetColorForTemperature(float temperature)
+        {
+            return _mappedColors[GetIndexForTemperature(temperature)];
         }
 
         public Color GetCellExtraColor(int index)

@@ -1,4 +1,5 @@
-﻿using HugsLib.Settings;
+﻿using System.Collections.Generic;
+using HugsLib.Settings;
 using HugsLib.Utils;
 using RimWorld;
 using RimWorld.Planet;
@@ -43,9 +44,14 @@ namespace HeatMap
 
             var outRect = new Rect(UI.screenWidth - horizontalOffset - boxSize, 8f, boxSize, boxSize);
             var temperature = Find.VisibleMap.mapTemperature.OutdoorTemp;
-            var backColor = _heatMap.GetColorForTemperature(temperature);
-            backColor.a = _outdoorThermometerOpacity / 100f;
-            GUI.DrawTexture(outRect, SolidColorMaterials.NewSolidColorTexture(backColor));
+            var textureIndex = _heatMap.GetIndexForTemperature(temperature);
+            if (!_temperatureTextureCache.ContainsKey(textureIndex))
+            {
+                var backColor = _heatMap.GetColorForTemperature(temperature);
+                backColor.a = _outdoorThermometerOpacity / 100f;
+                _temperatureTextureCache[textureIndex] = SolidColorMaterials.NewSolidColorTexture(backColor);
+            }
+            GUI.DrawTexture(outRect, _temperatureTextureCache[textureIndex]);
             GUI.DrawTexture(outRect, Resources.DisplayBoder);
 
             var temperatureForDisplay = temperature.ToStringTemperature("F0");
@@ -59,7 +65,6 @@ namespace HeatMap
                 ShowHeatMap = !ShowHeatMap;
             }
             TooltipHandler.TipRegion(outRect, "FALCHM.ThermometerTooltip".Translate());
-
 
             Text.Anchor = TextAnchor.UpperLeft;
         }
@@ -115,6 +120,8 @@ namespace HeatMap
                 "outdoorThermometerOpacity", "FALCHM.ThermometerOpacity".Translate(),
                 "FALCHM.ThermometerOpacityDesc".Translate(), 30,
                 Validators.IntRangeValidator(1, 100));
+
+            _outdoorThermometerOpacity.OnValueChanged = val => { _temperatureTextureCache.Clear(); };
         }
 
         public float GetConfiguredOpacity()
@@ -136,6 +143,8 @@ namespace HeatMap
         public bool ShowHeatMap;
 
         private HeatMap _heatMap;
+
+        private Dictionary<int, Texture2D> _temperatureTextureCache = new Dictionary<int, Texture2D>();
 
         private SettingHandle<int> _opacity;
 
