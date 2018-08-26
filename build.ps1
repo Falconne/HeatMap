@@ -75,6 +75,18 @@ function updateToGameVersion
     $gameVersionWithRev = Get-Content $gameVersionFile
     $version = [version] ($gameVersionWithRev.Split(" "))[0]
 
+
+
+    $aboutFile = Resolve-Path "$PSScriptRoot\mod-structure\About\About.xml"
+    $aboutFileContent = [xml] (Get-Content -Raw $aboutFile)
+    $gameVersion = [version] $aboutFileContent.ModMetaData.targetVersion
+    if ($gameVersion -ne $version)
+    {
+        Write-Host "Updating to mod to game version $version"
+        $aboutFileContent.ModMetaData.targetVersion = $version.ToString()
+        $aboutFileContent.Save($aboutFile)
+    }
+
     $content = Get-Content -Raw $assemblyInfoFile
     $newContent = $content -replace '"\d+\.\d+(\.\d+\.\d+")', "`"$($version.Major).$($version.Minor)`$1"
 
@@ -82,14 +94,7 @@ function updateToGameVersion
     {
         return
     }
-
-    Write-Host "Updating to mod to game version $version"
     Set-Content -Encoding UTF8 -Path $assemblyInfoFile $newContent
-
-    $aboutFile = Resolve-Path "$PSScriptRoot\mod-structure\About\About.xml"
-    $aboutFileContent = [xml] (Get-Content -Raw $aboutFile)
-    $aboutFileContent.ModMetaData.targetVersion = $version.ToString()
-    $aboutFileContent.Save($aboutFile)
 }
 
 function copyDependencies
