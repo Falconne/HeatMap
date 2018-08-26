@@ -22,8 +22,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="%24HugsLibChecker, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnlimitedHugs.Rimworld.HugsLibChecker.4.0.0\lib\net35\$HugsLibChecker.dll</HintPath>
+    </Reference>
+    <Reference Include="0Harmony, Version=1.0.9.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnlimitedHugs.Rimworld.HugsLib.4.1.1\lib\net35\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\ThirdParty\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="HugsLib, Version=0.18.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnlimitedHugs.Rimworld.HugsLib.4.1.1\lib\net35\HugsLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,17 +52,58 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\mod-structure\About\About.xml">
+      <Link>mod-structure\About\About.xml</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\About\Preview.png">
+      <Link>mod-structure\About\Preview.png</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\About\PublishedFileId.txt">
+      <Link>mod-structure\About\PublishedFileId.txt</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\About\Version.xml">
+      <Link>mod-structure\About\Version.xml</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\Defs\KeyBindingCategoryDefs\KeyBindingCategories.xml">
+      <Link>mod-structure\Defs\KeyBindingCategoryDefs\KeyBindingCategories.xml</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\Defs\KeyBindings.xml">
+      <Link>mod-structure\Defs\KeyBindings.xml</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\Defs\UpdateFeatureDefs\UpdateFeatureDefs.xml">
+      <Link>mod-structure\Defs\UpdateFeatureDefs\UpdateFeatureDefs.xml</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\Languages\English\Keyed\FALCHM_LanguageData.xml">
+      <Link>mod-structure\Languages\English\Keyed\FALCHM_LanguageData.xml</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\Languages\Japanese\DefInjected\HugsLib.UpdateFeatureDef\UpdateFeatures.xml">
+      <Link>mod-structure\Languages\Japanese\DefInjected\HugsLib.UpdateFeatureDef\UpdateFeatures.xml</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\Languages\Japanese\DefInjected\KeyBindingCategoryDef\KeyBindingCategories.xml">
+      <Link>mod-structure\Languages\Japanese\DefInjected\KeyBindingCategoryDef\KeyBindingCategories.xml</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\Languages\Japanese\DefInjected\KeyBindingDef\KeyBindings.xml">
+      <Link>mod-structure\Languages\Japanese\DefInjected\KeyBindingDef\KeyBindings.xml</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\Languages\Japanese\Keyed\FALCHM_LanguageData.xml">
+      <Link>mod-structure\Languages\Japanese\Keyed\FALCHM_LanguageData.xml</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\Textures\DisplayBorder.png">
+      <Link>mod-structure\Textures\DisplayBorder.png</Link>
+    </Content>
+    <Content Include="..\..\mod-structure\Textures\HeatMap.png">
+      <Link>mod-structure\Textures\HeatMap.png</Link>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>if not exist $(ProjectDir)ThirdParty mkdir  $(ProjectDir)ThirdParty
-copy /y "%25ProgramFiles(x86)%25\Steam\SteamApps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll"  $(ProjectDir)ThirdParty
-copy /y "%25ProgramFiles(x86)%25\Steam\SteamApps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll"  $(ProjectDir)ThirdParty
-copy /y "%25ProgramFiles(x86)%25\Steam\SteamApps\workshop\content\294100\818773962\Assemblies\*.dll" $(ProjectDir)ThirdParty
-if not exist $(ProjectDir)dist\$(TargetName)\Assemblies mkdir $(ProjectDir)dist\$(TargetName)\Assemblies
-copy /y $(ProjectDir)RimworldHugsLibChecker\Mods\HugsLibChecker\Assemblies\*.dll $(ProjectDir)dist\$(TargetName)\Assemblies</PreBuildEvent>
+    <PreBuildEvent>powershell.exe -EP Unrestricted $(ProjectDir)..\..\build.ps1 doPreBuild</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y/s  $(ProjectDir)dist\* "%25ProgramFiles(x86)%25\Steam\SteamApps\common\RimWorld\Mods"
-copy /y $(TargetPath) "%25ProgramFiles(x86)%25\Steam\SteamApps\common\RimWorld\Mods\$(TargetName)\Assemblies\"</PostBuildEvent>
+    <PostBuildEvent>powershell.exe -EP Unrestricted $(ProjectDir)..\..\build.ps1 doPostBuild</PostBuildEvent>
   </PropertyGroup>
 </Project>
