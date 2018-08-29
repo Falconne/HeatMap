@@ -43,7 +43,7 @@ namespace HeatMap
                 horizontalOffset += 216f;
 
             var outRect = new Rect(UI.screenWidth - horizontalOffset - boxSize, 8f, boxSize, boxSize);
-            var temperature = Find.VisibleMap.mapTemperature.OutdoorTemp;
+            var temperature = Find.CurrentMap.mapTemperature.OutdoorTemp;
             var textureIndex = _heatMap.GetIndexForTemperature(temperature);
             if (!_temperatureTextureCache.ContainsKey(textureIndex))
             {
@@ -71,7 +71,7 @@ namespace HeatMap
 
         public override void OnGUI()
         {
-            if (Current.ProgramState != ProgramState.Playing || Find.VisibleMap == null
+            if (Current.ProgramState != ProgramState.Playing || Find.CurrentMap == null
                 || WorldRendererUtility.WorldRenderedNow)
             {
                 return;

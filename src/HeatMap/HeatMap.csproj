@@ -53,9 +53,6 @@
     <Compile Include="Resources.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\..\mod-structure\About\About.xml">
       <Link>mod-structure\About\About.xml</Link>
     </Content>
@@ -98,6 +95,9 @@
     <Content Include="..\..\mod-structure\Textures\HeatMap.png">
       <Link>mod-structure\Textures\HeatMap.png</Link>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
