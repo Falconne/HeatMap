@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+	<HeatMap_0_17_2.modNameReadable>Heat Map</HeatMap_0_17_2.modNameReadable>
 	<HeatMap_0_17_2.content>アイコンを温度計に変更しました。</HeatMap_0_17_2.content>
 
+	<HeatMap_0_17_3.modNameReadable>Heat Map</HeatMap_0_17_3.modNameReadable>
 	<HeatMap_0_17_3.content>オーバーレイの不透明度と更新速度をMod設定のダイアログで設定できるようになりました。</HeatMap_0_17_3.content>
 
+	<HeatMap_0_17_4.modNameReadable>Heat Map</HeatMap_0_17_4.modNameReadable>
 	<HeatMap_0_17_4.content>オーバーレイはキーボードショートカットでオン/オフを切り替えることができるようになりました。初期設定のキー配置は\（バックスラッシュ）です。 これは、オプションのキーボード設定メニューで変更できます。</HeatMap_0_17_4.content>
 
+	<HeatMap_0_18_2.modNameReadable>Heat Map</HeatMap_0_18_2.modNameReadable>
 	<HeatMap_0_18_2.content>温度計ウィジェットがUI画面の右上隅に追加され、現在の屋外温度（オーバーレイと同じ配色で重ね掛けされています）が表示されます。 これは、Mod設定で無効にすることができます。 このウィジェットをクリックすると、ヒートマップオーバーレイも切り替わります。</HeatMap_0_18_2.content>
 
+	<HeatMap_0_18_3.modNameReadable>Heat Map</HeatMap_0_18_3.modNameReadable>
 	<HeatMap_0_18_3.content>屋外温度計のメモリリークを修正しました。</HeatMap_0_18_3.content>
 
 </LanguageData>
