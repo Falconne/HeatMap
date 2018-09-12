@@ -13,4 +13,5 @@
   <FALCHM.ThermometerOpacityDesc>Reducir este valor para hacer el color de fondo del termómetro de temperatura exterior más transparente.</FALCHM.ThermometerOpacityDesc>
 
   <FALCHM.ThermometerTooltip>Temperatura exterior. Haga clic para alternar el filtro termico. Este complemento puede deshabilitarse en la configuración del mod.</FALCHM.ThermometerTooltip>
-</LanguageData>
+  <FALCHM.ShowHeatMap>Mostrar filtro termico</FALCHM.ShowHeatMap>
+  </LanguageData>
