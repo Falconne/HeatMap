@@ -17,7 +17,7 @@ namespace HeatMap
                 return;
 
             row.ToggleableIcon(ref Main.Instance.ShowHeatMap, Resources.Icon,
-                "Show Heat Map", SoundDefOf.Mouseover_ButtonToggle);
+                "FALCHM.ShowHeatMap".Translate(), SoundDefOf.Mouseover_ButtonToggle);
         }
     }
 }

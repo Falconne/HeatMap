@@ -13,4 +13,5 @@
   <FALCHM.ThermometerOpacityDesc>Reduce this value to make the outdoor temperature thermometer background color more transparent.</FALCHM.ThermometerOpacityDesc>
 
   <FALCHM.ThermometerTooltip>Outdoor temperature. Click to toggle heat map overlay. This widget can be disabled in Mod Settings.</FALCHM.ThermometerTooltip>
+  <FALCHM.ShowHeatMap>Show Heat Map</FALCHM.ShowHeatMap>
 </LanguageData>
