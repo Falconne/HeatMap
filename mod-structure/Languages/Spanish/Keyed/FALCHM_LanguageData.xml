@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <FALCHM.OverlayOpacity>Opacidad del filtro termico</FALCHM.OverlayOpacity>
-  <FALCHM.OverlayOpacityDesc>Reduzca este valor para que filtro termico sea más transparente.</FALCHM.OverlayOpacityDesc>
+  <FALCHM.OverlayOpacity>Opacidad del filtro térmico</FALCHM.OverlayOpacity>
+  <FALCHM.OverlayOpacityDesc>Reduzca este valor para que filtro térmico sea más transparente.</FALCHM.OverlayOpacityDesc>
 
   <FALCHM.UpdateDelay>Retraso en la actualización del filtro</FALCHM.UpdateDelay>
   <FALCHM.UpdateDelayDesc>Número de ticks de espera entre las actualizaciones del filtro mientras el juego no está en pausa. Los números más bajos proporcionan actualizaciones más suaves, pero pueden afectar el rendimiento en equipos de gama baja.</FALCHM.UpdateDelayDesc>
@@ -12,5 +12,6 @@
   <FALCHM.ThermometerOpacity>Opacidad del termómetro</FALCHM.ThermometerOpacity>
   <FALCHM.ThermometerOpacityDesc>Reducir este valor para hacer el color de fondo del termómetro de temperatura exterior más transparente.</FALCHM.ThermometerOpacityDesc>
 
-  <FALCHM.ThermometerTooltip>Temperatura exterior. Haga clic para alternar el filtro termico. Este complemento puede deshabilitarse en la configuración del mod.</FALCHM.ThermometerTooltip>
-</LanguageData>
+  <FALCHM.ThermometerTooltip>Temperatura exterior. Haga clic para alternar el filtro térmico. Este complemento puede deshabilitarse en la configuración del mod.</FALCHM.ThermometerTooltip>
+  <FALCHM.ShowHeatMap>Mostrar filtro térmico</FALCHM.ShowHeatMap>
+  </LanguageData>
