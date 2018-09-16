@@ -13,5 +13,6 @@
   <FALCHM.ThermometerOpacityDesc>屋外温度の温度計の背景色をより透明にするには、この値を減らします。</FALCHM.ThermometerOpacityDesc>
 
   <FALCHM.ThermometerTooltip>屋外温度。クリックすると、ヒートマップのオーバーレイを切り替えます。このウィジェット(widget/小型表示)はMod設定で無効にすることができます。</FALCHM.ThermometerTooltip>
+  <FALCHM.ShowHeatMap>温度分布を表示</FALCHM.ShowHeatMap>
 
 </LanguageData>
