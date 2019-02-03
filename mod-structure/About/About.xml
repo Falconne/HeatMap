@@ -3,5 +3,7 @@
   <name>Heat Map</name>
   <author>Falconne</author>
   <description>Adds an overlay toggle button to show a temperature based colour gradient over indoor areas: green for the human comfort zone, getting bluer and redder for colder and hotter rooms respectively.</description>
-  <targetVersion>1.0.2059</targetVersion>
+  <supportedVersions>
+    <li>1.0</li>
+  </supportedVersions>
 </ModMetaData>
