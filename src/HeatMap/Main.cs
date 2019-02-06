@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Policy;
 using HugsLib.Settings;
 using HugsLib.Utils;
 using RimWorld;
@@ -122,6 +123,59 @@ namespace HeatMap
                 Validators.IntRangeValidator(1, 100));
 
             _outdoorThermometerOpacity.OnValueChanged = val => { _temperatureTextureCache.Clear(); };
+
+
+            _useCustomeRange = Settings.GetHandle(
+                "useCustomeRange", "FALCHM.UseCustomeRange".Translate(),
+                "FALCHM.UseCustomeRangeDesc".Translate(), false);
+
+            _useCustomeRange.OnValueChanged = val => { _heatMap = null; };
+
+            var defaultCustomRangeMin = (int)GenTemperature.CelsiusTo(10, Prefs.TemperatureMode);
+            var defaultCustomRangeMax = (int)GenTemperature.CelsiusTo(30, Prefs.TemperatureMode);
+            var customRangeValidator = Validators.IntRangeValidator(
+                (int)GenTemperature.CelsiusTo(-100, Prefs.TemperatureMode),
+                (int)GenTemperature.CelsiusTo(100, Prefs.TemperatureMode));
+
+            _customRangeMin = Settings.GetHandle(
+                "customRangeMin", "FALCHM.CustomRangeMin".Translate(),
+                "FALCHM.CustomRangeMinDesc".Translate(), defaultCustomRangeMin, customRangeValidator);
+
+            _customRangeMin.VisibilityPredicate = () => _useCustomeRange;
+            _customRangeMin.OnValueChanged = val =>
+                {
+                    if (_customRangeMax <= _customRangeMin)
+                        _customRangeMax.Value = _customRangeMin + 1;
+                    _heatMap = null;
+                };
+
+
+            _customRangeMax = Settings.GetHandle(
+                "customRangeMax", "FALCHM.CustomRangeMax".Translate(),
+                "FALCHM.CustomRangeMaxDesc".Translate(), defaultCustomRangeMax, customRangeValidator);
+
+            _customRangeMax.VisibilityPredicate = () => _useCustomeRange;
+            _customRangeMax.OnValueChanged = val =>
+                {
+                    if (_customRangeMin >= _customRangeMax)
+                        _customRangeMin.Value = _customRangeMax - 1;
+                    _heatMap = null;
+                };
+        }
+
+        public bool ShouldUseCustomRange()
+        {
+            return _useCustomeRange;
+        }
+
+        public int GetCustomRangeMin()
+        {
+            return _customRangeMin;
+        }
+
+        public int GetCustomRangeMax()
+        {
+            return _customRangeMax;
         }
 
         public float GetConfiguredOpacity()
@@ -153,5 +207,11 @@ namespace HeatMap
         private SettingHandle<bool> _showOutdoorThermometer;
 
         private SettingHandle<int> _outdoorThermometerOpacity;
+
+        private SettingHandle<int> _customRangeMin;
+
+        private SettingHandle<int> _customRangeMax;
+
+        private SettingHandle<bool> _useCustomeRange;
     }
 }

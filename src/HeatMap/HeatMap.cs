@@ -9,6 +9,50 @@ namespace HeatMap
     {
         public HeatMap()
         {
+            if (Main.Instance.ShouldUseCustomRange())
+                CreateCustomMap();
+            else
+                CreateComfortMap();
+        }
+
+        public void CreateCustomMap()
+        {
+            _mappedTemperatureRange = new IntRange(
+                Main.Instance.GetCustomRangeMin(), Main.Instance.GetCustomRangeMax());
+
+            var mappedColorCount = _mappedTemperatureRange.max - _mappedTemperatureRange.min;
+            _mappedColors = new Color[mappedColorCount];
+
+            var delta = 1f / mappedColorCount;
+            var channelR = -1f;
+            var channelG = 0f;
+            var channelB = 1f;
+            var greenRising = true;
+
+            for (var i = 0; i < mappedColorCount; i++)
+            {
+                var realR = Math.Min(channelR, 1f);
+                realR = Math.Max(realR, 0f);
+
+                var realG = Math.Min(channelG, 1f);
+                realG = Math.Max(realG, 0f);
+
+                var realB = Math.Min(channelB, 1f);
+                realB = Math.Max(realB, 0f);
+
+                _mappedColors[i] = new Color(realR, realG, realB);
+
+                if (channelG >= 2f)
+                    greenRising = false;
+
+                channelR += delta;
+                channelG += greenRising ? delta : -delta;
+                channelB -= delta;
+            }
+        }
+
+        public void CreateComfortMap()
+        {
             var minComfortTemp = (int)ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin) + 3;
             var maxComfortTemp = (int)ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax) - 3;
 
@@ -64,7 +108,7 @@ namespace HeatMap
                 if (_drawerInt == null)
                 {
                     var map = Find.CurrentMap;
-                    _drawerInt = new CellBoolDrawer(this, map.Size.x, map.Size.z, 
+                    _drawerInt = new CellBoolDrawer(this, map.Size.x, map.Size.z,
                         Main.Instance.GetConfiguredOpacity());
                 }
                 return _drawerInt;
@@ -155,7 +199,7 @@ namespace HeatMap
 
         private IntRange _mappedTemperatureRange;
 
-        private readonly Color[] _mappedColors;
+        private Color[] _mappedColors;
 
         private Color _nextColor;
 
