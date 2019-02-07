@@ -125,47 +125,67 @@ namespace HeatMap
             _outdoorThermometerOpacity.OnValueChanged = val => { _temperatureTextureCache.Clear(); };
 
 
-            _useCustomeRange = Settings.GetHandle(
+            _useCustomRange = Settings.GetHandle(
                 "useCustomeRange", "FALCHM.UseCustomeRange".Translate(),
                 "FALCHM.UseCustomeRangeDesc".Translate(), false);
 
-            _useCustomeRange.OnValueChanged = val => { _heatMap = null; };
+            _useCustomRange.OnValueChanged = val => { _heatMap = null; };
 
-            var defaultCustomRangeMin = (int)GenTemperature.CelsiusTo(10, Prefs.TemperatureMode);
-            var defaultCustomRangeMax = (int)GenTemperature.CelsiusTo(30, Prefs.TemperatureMode);
+
+            _customRangeMin = Settings.GetHandle("customRangeMin", "Unused", "Unused", 0);
+            _customRangeMax = Settings.GetHandle("customRangeMin", "Unused", "Unused", 40);
+
+
+
             var customRangeValidator = Validators.IntRangeValidator(
                 (int)GenTemperature.CelsiusTo(-100, Prefs.TemperatureMode),
                 (int)GenTemperature.CelsiusTo(100, Prefs.TemperatureMode));
 
-            _customRangeMin = Settings.GetHandle(
-                "customRangeMin", "FALCHM.CustomRangeMin".Translate(),
-                "FALCHM.CustomRangeMinDesc".Translate(), defaultCustomRangeMin, customRangeValidator);
+            var customRangeMin = Settings.GetHandle(
+                "customRangeMinPlaceholder",
+                "FALCHM.CustomRangeMin".Translate(),
+                "FALCHM.CustomRangeMinDesc".Translate(),
+                (int)GenTemperature.CelsiusTo(_customRangeMin, Prefs.TemperatureMode),
+                customRangeValidator);
 
-            _customRangeMin.VisibilityPredicate = () => _useCustomeRange;
-            _customRangeMin.OnValueChanged = val =>
-                {
-                    if (_customRangeMax <= _customRangeMin)
-                        _customRangeMax.Value = _customRangeMin + 1;
-                    _heatMap = null;
-                };
+            customRangeMin.Unsaved = true;
+            customRangeMin.VisibilityPredicate = () => _useCustomRange;
+
+            var customRangeMax = Settings.GetHandle(
+                "customRangeMaxPlaceholder",
+                "FALCHM.CustomRangeMax".Translate(),
+                "FALCHM.CustomRangeMaxDesc".Translate(),
+                (int)GenTemperature.CelsiusTo(_customRangeMax, Prefs.TemperatureMode),
+                customRangeValidator);
+
+            customRangeMax.Unsaved = true;
+            customRangeMax.VisibilityPredicate = () => _useCustomRange;
 
 
-            _customRangeMax = Settings.GetHandle(
-                "customRangeMax", "FALCHM.CustomRangeMax".Translate(),
-                "FALCHM.CustomRangeMaxDesc".Translate(), defaultCustomRangeMax, customRangeValidator);
 
-            _customRangeMax.VisibilityPredicate = () => _useCustomeRange;
-            _customRangeMax.OnValueChanged = val =>
-                {
-                    if (_customRangeMin >= _customRangeMax)
-                        _customRangeMin.Value = _customRangeMax - 1;
-                    _heatMap = null;
-                };
+            customRangeMin.OnValueChanged = val =>
+            {
+                if (customRangeMax <= customRangeMin)
+                    customRangeMax.Value = customRangeMin + 1;
+
+                _customRangeMin.Value = ConvertToCelcius(customRangeMin);
+                _heatMap = null;
+            };
+
+
+            customRangeMax.OnValueChanged = val =>
+            {
+                if (customRangeMin >= customRangeMax)
+                    customRangeMin.Value = customRangeMax - 1;
+
+                _customRangeMax.Value = ConvertToCelcius(customRangeMax);
+                _heatMap = null;
+            };
         }
 
         public bool ShouldUseCustomRange()
         {
-            return _useCustomeRange;
+            return _useCustomRange;
         }
 
         public int GetCustomRangeMin()
@@ -186,6 +206,21 @@ namespace HeatMap
         public int GetUpdateDelay()
         {
             return _updateDelay;
+        }
+
+        private static int ConvertToCelcius(int value)
+        {
+            switch (Prefs.TemperatureMode)
+            {
+                case TemperatureDisplayMode.Celsius:
+                    return value;
+
+                case TemperatureDisplayMode.Kelvin:
+                    return value - 273;
+
+                default:
+                    return (int)((value - 32) / 1.8f);
+            }
         }
 
         internal new ModLogger Logger => base.Logger;
@@ -212,6 +247,6 @@ namespace HeatMap
 
         private SettingHandle<int> _customRangeMax;
 
-        private SettingHandle<bool> _useCustomeRange;
+        private SettingHandle<bool> _useCustomRange;
     }
 }
