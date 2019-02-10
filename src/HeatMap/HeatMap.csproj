@@ -76,6 +76,7 @@
     </Content>
     <Content Include="..\..\mod-structure\Languages\English\Keyed\FALCHM_LanguageData.xml">
       <Link>mod-structure\Languages\English\Keyed\FALCHM_LanguageData.xml</Link>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="..\..\mod-structure\Languages\Japanese\DefInjected\HugsLib.UpdateFeatureDef\UpdateFeatures.xml">
       <Link>mod-structure\Languages\Japanese\DefInjected\HugsLib.UpdateFeatureDef\UpdateFeatures.xml</Link>
