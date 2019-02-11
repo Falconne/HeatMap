@@ -14,13 +14,15 @@
 
   <FALCHM.ThermometerTooltip>Outdoor temperature. Click to toggle heat map overlay. This widget can be disabled in Mod Settings.</FALCHM.ThermometerTooltip>
   <FALCHM.ShowHeatMap>Show Heat Map</FALCHM.ShowHeatMap>
-  
+
   <FALCHM.UseCustomeRange>Use Custom Range</FALCHM.UseCustomeRange>
-  <FALCHM.UseCustomeRangeDesc>When off, the colour gradient automatically maps to the human comfort range as defined by the game. When on, allows you to set a custom boundary for the blue and red ends of the gradient, in current temperature units</FALCHM.UseCustomeRangeDesc>
-  
+  <FALCHM.UseCustomeRangeDesc>When off, the colour gradient automatically maps to the human comfort range as defined by the game.
+
+When on, allows you to set a custom boundary for the blue and red ends of the gradient, in current temperature units</FALCHM.UseCustomeRangeDesc>
+
   <FALCHM.CustomRangeMin>Custom Range Min</FALCHM.CustomRangeMin>
-  <FALCHM.CustomRangeMinDesc>Blue end of gradient. Temperatures below this will be blue.</FALCHM.CustomRangeMinDesc>
-  
+  <FALCHM.CustomRangeMinDesc>Blue end of gradient. Temperatures below this will be blue. Use current temperature units</FALCHM.CustomRangeMinDesc>
+
   <FALCHM.CustomRangeMax>Custom Range Max</FALCHM.CustomRangeMax>
-  <FALCHM.CustomRangeMaxDesc>Red end of gradient. Temperatures above this will be red.</FALCHM.CustomRangeMaxDesc>
+  <FALCHM.CustomRangeMaxDesc>Red end of gradient. Temperatures above this will be red. Use current temperature units</FALCHM.CustomRangeMaxDesc>
 </LanguageData>

@@ -112,39 +112,37 @@ namespace HeatMap
             _updateDelay = Settings.GetHandle("updateDelay",
                 "FALCHM.UpdateDelay".Translate(),
                 "FALCHM.UpdateDelayDesc".Translate(),
-                100, 
+                100,
                 Validators.IntRangeValidator(1, 9999));
 
             _showOutdoorThermometer = Settings.GetHandle(
-                "showOutdoorThermometer", 
+                "showOutdoorThermometer",
                 "FALCHM.ShowOutDoorThermometer".Translate(),
-                "FALCHM.ShowOutDoorThermometerDesc".Translate(), 
+                "FALCHM.ShowOutDoorThermometerDesc".Translate(),
                 true);
 
             _outdoorThermometerOpacity = Settings.GetHandle(
-                "outdoorThermometerOpacity", 
+                "outdoorThermometerOpacity",
                 "FALCHM.ThermometerOpacity".Translate(),
-                "FALCHM.ThermometerOpacityDesc".Translate(), 
+                "FALCHM.ThermometerOpacityDesc".Translate(),
                 30,
                 Validators.IntRangeValidator(1, 100));
 
             _outdoorThermometerOpacity.OnValueChanged = val => { _temperatureTextureCache.Clear(); };
 
 
-            var customRaneDesc =
-                $"{"FALCHM.UseCustomeRangeDesc".Translate()} ({Prefs.TemperatureMode.ToStringHuman()})";
-
             _useCustomRange = Settings.GetHandle(
                 "useCustomeRange",
                 "FALCHM.UseCustomeRange".Translate(),
-                customRaneDesc, 
+                "FALCHM.UseCustomeRangeDesc".Translate(),
                 false);
 
             _useCustomRange.OnValueChanged = val => { _heatMap = null; };
 
 
             _customRangeMin = Settings.GetHandle("customRangeMin", "Unused", "Unused", 0);
-            _customRangeMax = Settings.GetHandle("customRangeMin", "Unused", "Unused", 40);
+            _customRangeMax = Settings.GetHandle("customRangeMax", "Unused", "Unused", 40);
+
             _customRangeMin.VisibilityPredicate = () => false;
             _customRangeMax.VisibilityPredicate = () => false;
 
@@ -156,7 +154,7 @@ namespace HeatMap
             var customRangeMin = Settings.GetHandle(
                 "customRangeMinPlaceholder",
                 "FALCHM.CustomRangeMin".Translate(),
-                "FALCHM.CustomRangeMinDesc".Translate(),
+                $"{"FALCHM.CustomRangeMinDesc".Translate()} ({Prefs.TemperatureMode.ToStringHuman()})",
                 (int)GenTemperature.CelsiusTo(_customRangeMin, Prefs.TemperatureMode),
                 customRangeValidator);
 
@@ -166,14 +164,14 @@ namespace HeatMap
             var customRangeMax = Settings.GetHandle(
                 "customRangeMaxPlaceholder",
                 "FALCHM.CustomRangeMax".Translate(),
-                "FALCHM.CustomRangeMaxDesc".Translate(),
+                $"{"FALCHM.CustomRangeMaxDesc".Translate()} ({Prefs.TemperatureMode.ToStringHuman()})",
                 (int)GenTemperature.CelsiusTo(_customRangeMax, Prefs.TemperatureMode),
                 customRangeValidator);
 
             customRangeMax.Unsaved = true;
             customRangeMax.VisibilityPredicate = () => _useCustomRange;
 
-            
+
             customRangeMin.OnValueChanged = val =>
             {
                 if (customRangeMax <= customRangeMin)
@@ -181,6 +179,7 @@ namespace HeatMap
 
                 _customRangeMin.Value = ConvertToCelcius(customRangeMin);
                 _heatMap = null;
+                _temperatureTextureCache.Clear();
             };
 
 
@@ -191,6 +190,7 @@ namespace HeatMap
 
                 _customRangeMax.Value = ConvertToCelcius(customRangeMax);
                 _heatMap = null;
+                _temperatureTextureCache.Clear();
             };
         }
 

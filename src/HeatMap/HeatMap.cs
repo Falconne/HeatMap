@@ -23,13 +23,13 @@ namespace HeatMap
             var mappedColorCount = _mappedTemperatureRange.max - _mappedTemperatureRange.min;
             _mappedColors = new Color[mappedColorCount];
 
-            var delta = 1f / mappedColorCount;
+            var delta = 2f / (mappedColorCount - 1);
             var channelR = -1f;
             var channelG = 0f;
             var channelB = 1f;
             var greenRising = true;
 
-            for (var i = 0; i < mappedColorCount; i++)
+            for (var i = 0; i < mappedColorCount - 1; i++)
             {
                 var realR = Math.Min(channelR, 1f);
                 realR = Math.Max(realR, 0f);
@@ -42,13 +42,17 @@ namespace HeatMap
 
                 _mappedColors[i] = new Color(realR, realG, realB);
 
-                if (channelG >= 2f)
+                if (channelG >= 1f)
                     greenRising = false;
 
                 channelR += delta;
                 channelG += greenRising ? delta : -delta;
                 channelB -= delta;
             }
+
+            // Force high end to be red (or else if the temperature range is an even number,
+            // the green channel will not go down to zero in above loop).
+            _mappedColors[mappedColorCount - 1] = Color.red;
         }
 
         public void CreateComfortMap()
@@ -72,7 +76,7 @@ namespace HeatMap
             var greenRising = true;
 
             var mappingTemperature = _mappedTemperatureRange.min;
-            for (var i = 0; i < mappedColorCount; i++, mappingTemperature++)
+            for (var i = 0; i < mappedColorCount - 1; i++, mappingTemperature++)
             {
                 var realR = Math.Min(channelR, 1f);
                 realR = Math.Max(realR, 0f);
@@ -99,6 +103,10 @@ namespace HeatMap
                 channelG += greenRising ? delta : -delta;
                 channelB -= delta;
             }
+
+            // Force high end to be red (or else if the temperature range is an even number,
+            // the green channel will not go down to zero in above loop).
+            _mappedColors[mappedColorCount - 1] = Color.red;
         }
 
         public CellBoolDrawer Drawer
