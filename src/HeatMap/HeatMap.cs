@@ -182,7 +182,7 @@ namespace HeatMap
 
         public Color Color => Color.white;
 
-        public void Update()
+        public void Update(int updateDelay)
         {
             if (Main.Instance.ShowHeatMap)
             {
@@ -191,7 +191,7 @@ namespace HeatMap
                 if (_nextUpdateTick == 0 || tick >= _nextUpdateTick)
                 {
                     Drawer.SetDirty();
-                    _nextUpdateTick = tick + Main.Instance.GetUpdateDelay();
+                    _nextUpdateTick = tick + updateDelay;
                 }
             }
             Drawer.CellBoolDrawerUpdate();

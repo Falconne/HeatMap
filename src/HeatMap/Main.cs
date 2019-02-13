@@ -27,7 +27,7 @@ namespace HeatMap
             if (_heatMap == null)
                 _heatMap = new HeatMap();
 
-            _heatMap.Update();
+            _heatMap.Update(_updateDelay);
         }
 
         public void UpdateOutdoorThermometer()
@@ -72,13 +72,20 @@ namespace HeatMap
 
         public override void OnGUI()
         {
-            if (Current.ProgramState != ProgramState.Playing || Find.CurrentMap == null
-                || WorldRendererUtility.WorldRenderedNow)
+            if (Current.ProgramState != ProgramState.Playing ||
+                Find.CurrentMap == null ||
+                WorldRendererUtility.WorldRenderedNow ||
+                _heatMap == null)
             {
                 return;
             }
 
             UpdateOutdoorThermometer();
+            if (ShowHeatMap && _showTemperatureOverRooms)
+            {
+                TemperatureDisplayer.Update(_updateDelay);
+                TemperatureDisplayer.OnGUI();
+            }
 
             if (Event.current.type != EventType.KeyDown || Event.current.keyCode == KeyCode.None)
             {
@@ -97,7 +104,7 @@ namespace HeatMap
 
         public override void WorldLoaded()
         {
-            _heatMap?.Reset();
+            ResetAll();
         }
 
         public override void DefsLoaded()
@@ -131,13 +138,20 @@ namespace HeatMap
             _outdoorThermometerOpacity.OnValueChanged = val => { _temperatureTextureCache.Clear(); };
 
 
+            _showTemperatureOverRooms = Settings.GetHandle(
+                "showTemperatureOverRooms",
+                "FALCHM.ShowTemperatureOverRooms".Translate(),
+                "FALCHM.ShowTemperatureOverRoomsDesc".Translate(),
+                true);
+
+
             _useCustomRange = Settings.GetHandle(
                 "useCustomeRange",
                 "FALCHM.UseCustomeRange".Translate(),
                 "FALCHM.UseCustomeRangeDesc".Translate(),
                 false);
 
-            _useCustomRange.OnValueChanged = val => { _heatMap = null; };
+            _useCustomRange.OnValueChanged = val => { ResetAll(); };
 
 
             _customRangeMin = Settings.GetHandle("customRangeMin", "Unused", "Unused", 0);
@@ -178,8 +192,7 @@ namespace HeatMap
                     customRangeMax.Value = customRangeMin + 1;
 
                 _customRangeMin.Value = ConvertToCelcius(customRangeMin);
-                _heatMap = null;
-                _temperatureTextureCache.Clear();
+                ResetAll();
             };
 
 
@@ -189,8 +202,7 @@ namespace HeatMap
                     customRangeMin.Value = customRangeMax - 1;
 
                 _customRangeMax.Value = ConvertToCelcius(customRangeMax);
-                _heatMap = null;
-                _temperatureTextureCache.Clear();
+                ResetAll();
             };
         }
 
@@ -214,9 +226,11 @@ namespace HeatMap
             return _opacity / 100f;
         }
 
-        public int GetUpdateDelay()
+        private void ResetAll()
         {
-            return _updateDelay;
+            _heatMap = null;
+            TemperatureDisplayer.Reset();
+            _temperatureTextureCache.Clear();
         }
 
         private static int ConvertToCelcius(int value)
@@ -242,9 +256,11 @@ namespace HeatMap
 
         public bool ShowHeatMap;
 
+        public RoomTemperatureDisplayer TemperatureDisplayer { get; } = new RoomTemperatureDisplayer();
+
         private HeatMap _heatMap;
 
-        private Dictionary<int, Texture2D> _temperatureTextureCache = new Dictionary<int, Texture2D>();
+        private readonly Dictionary<int, Texture2D> _temperatureTextureCache = new Dictionary<int, Texture2D>();
 
         private SettingHandle<int> _opacity;
 
@@ -259,5 +275,7 @@ namespace HeatMap
         private SettingHandle<int> _customRangeMax;
 
         private SettingHandle<bool> _useCustomRange;
+
+        private SettingHandle<bool> _showTemperatureOverRooms;
     }
 }

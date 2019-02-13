@@ -51,6 +51,8 @@
     <Compile Include="PlaySettings_Detour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.cs" />
+    <Compile Include="RoomTemperatureDisplayer.cs" />
+    <Compile Include="RoomWithLabelCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\mod-structure\About\About.xml">
