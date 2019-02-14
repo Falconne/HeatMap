@@ -35,4 +35,10 @@
     <assemblyVersion>0.18.3</assemblyVersion>
     <content>Fix memory leak in outdoor thermometer.</content>
   </HugsLib.UpdateFeatureDef>
+
+  <HugsLib.UpdateFeatureDef ParentName="UpdateFeatureBase">
+    <defName>HeatMap_1_0_2</defName>
+    <assemblyVersion>1.0.2</assemblyVersion>
+    <content>* When overlay is on, each room's temperature will now be displayed in small text over its center cell. This can be disabled in the mod's settings.|* You can now define custom bounds for the blue and red ends of the overlay gradient in the mod settings. By default this is mapped to the game's human comfort range, but you can set a different range on extreme maps where comfort is not a priority.</content>
+  </HugsLib.UpdateFeatureDef>
 </Defs>
