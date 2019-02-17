@@ -15,4 +15,16 @@
   <FALCHM.ThermometerTooltip>屋外温度。クリックすると、ヒートマップのオーバーレイを切り替えます。このウィジェット(widget/小型表示)はMod設定で無効にすることができます。</FALCHM.ThermometerTooltip>
   <FALCHM.ShowHeatMap>温度分布を表示</FALCHM.ShowHeatMap>
 
+  <FALCHM.UseCustomeRange>カスタム範囲有効</FALCHM.UseCustomeRange>
+  <FALCHM.UseCustomeRangeDesc>オフにすると、温度の色変化はバニラで定義されている人間の快適な温度範囲に自動的に設定されます。\n\nオンにすると、現在の温度表示(℃/F)で、温度範囲の青(冷たい)と赤(熱い)の両端で、カスタムした温度の境界を設定できます。</FALCHM.UseCustomeRangeDesc>
+
+  <FALCHM.CustomRangeMin>最低温度カスタム範囲</FALCHM.CustomRangeMin>
+  <FALCHM.CustomRangeMinDesc>温度範囲の青色表示される最低温度です。これ以下の温度は青色になります。現在の温度単位(℃/F)を使用</FALCHM.CustomRangeMinDesc>
+
+  <FALCHM.CustomRangeMax>最高温度カスタム範囲</FALCHM.CustomRangeMax>
+  <FALCHM.CustomRangeMaxDesc>温度範囲の赤色表示される最高温度です。これ以上の気温は赤色になります。現在の温度単位(℃/F)を使用</FALCHM.CustomRangeMaxDesc>
+
+  <FALCHM.ShowTemperatureOverRooms>部屋上に温度を表示</FALCHM.ShowTemperatureOverRooms>
+  <FALCHM.ShowTemperatureOverRoomsDesc>度のオーバーレイ表示が有効になっている時に、各部屋の中央に室温が表示されます。</FALCHM.ShowTemperatureOverRoomsDesc>
+
 </LanguageData>
