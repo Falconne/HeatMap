@@ -107,6 +107,11 @@ namespace HeatMap
             ResetAll();
         }
 
+        public override void MapLoaded(Map map)
+        {
+            ResetAll();
+        }
+
         public override void DefsLoaded()
         {
             _opacity = Settings.GetHandle(

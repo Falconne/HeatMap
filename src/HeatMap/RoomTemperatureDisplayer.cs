@@ -13,12 +13,15 @@ namespace HeatMap
 
         private int _nextUpdateTick;
 
+        private Map _lastSeenMap;
 
         public void Update(int updateDelay)
         {
             var tick = Find.TickManager.TicksGame;
-            if (_nextUpdateTick != 0 && tick < _nextUpdateTick)
+            if (_nextUpdateTick != 0 && tick < _nextUpdateTick && Find.CurrentMap == _lastSeenMap)
                 return;
+
+            _lastSeenMap = Find.CurrentMap;
 
             _nextUpdateTick = tick + updateDelay;
             RoomsWithLabelCells.Clear();
