@@ -16,4 +16,7 @@
 	<HeatMap_0_18_3.modNameReadable>Heat Map</HeatMap_0_18_3.modNameReadable>
 	<HeatMap_0_18_3.content>屋外温度計のメモリリークを修正しました。</HeatMap_0_18_3.content>
 
+	<HeatMap_1_0_2.modNameReadable>Heat Map</HeatMap_1_0_2.modNameReadable>
+	<HeatMap_1_0_2.content>・オーバーレイ表示をオンにすると、それぞれの部屋の温度が部屋の中央に小さなテキストで表示されます。 これは、Modの設定で無効にすることができます。|・Modの設定で、オーバーレイの表示色を青と赤のグラデーション境界をカスタム定義できるようになりました。 初期値ではこれらはゲームでの人間たちが快適と感じる温度の範囲で割り当てられていますが、快適さを優先できない極地バイオームのマップでは状況に合わせた範囲を設定することができます。</HeatMap_1_0_2.content>
+
 </LanguageData>
