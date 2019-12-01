@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <FALCHM.OverlayOpacity>温度示意图的不透明度</FALCHM.OverlayOpacity>
+  <FALCHM.OverlayOpacityDesc>降低该数值会让示意图的颜色更透明。</FALCHM.OverlayOpacityDesc>
+
+  <FALCHM.UpdateDelay>温度示意图更新周期（单位:Tick，1秒=60Tick）</FALCHM.UpdateDelay>
+  <FALCHM.UpdateDelayDesc>游戏处于非暂停状态时，示意图的更新周期。较小的数值可提供更快的更新速度，但可能会影响低端计算机的性能。</FALCHM.UpdateDelayDesc>
+
+  <FALCHM.ShowOutDoorThermometer>显示户外温度计</FALCHM.ShowOutDoorThermometer>
+  <FALCHM.ShowOutDoorThermometerDesc>在游戏界面的右上角用一个小部件显示当前的户外温度。</FALCHM.ShowOutDoorThermometerDesc>
+
+  <FALCHM.ThermometerOpacity>温度计的不透明度</FALCHM.ThermometerOpacity>
+  <FALCHM.ThermometerOpacityDesc>降低该数值会使户外温度计的背景颜色更透明。</FALCHM.ThermometerOpacityDesc>
+
+  <FALCHM.ThermometerTooltip>当前户外温度。点击可切换显示/关闭温度示意图。此小部件可在Mod设置中关闭。</FALCHM.ThermometerTooltip>
+  <FALCHM.ShowHeatMap>切换温度显示</FALCHM.ShowHeatMap>
+
+  <FALCHM.UseCustomeRange>自定义温度切换范围</FALCHM.UseCustomeRange>
+  <FALCHM.UseCustomeRangeDesc>此选项关闭时，温度示意图颜色会自动读取游戏内定义的人体舒适范围切换。
+  启用时，允许以当前的温度单位自定义变换到蓝色（冷）和红色（热）的界限。</FALCHM.UseCustomeRangeDesc>
+
+  <FALCHM.CustomRangeMin>自定义最低温度范围</FALCHM.CustomRangeMin>
+  <FALCHM.CustomRangeMinDesc>蓝色（冷）的界限。当温度低于设定数值时示意图变为蓝色（当前的温度单位）。</FALCHM.CustomRangeMinDesc>
+
+  <FALCHM.CustomRangeMax>自定义最高温度范围</FALCHM.CustomRangeMax>
+  <FALCHM.CustomRangeMaxDesc>红色（热）的界限。当温度高于设定数值时示意图变为红色（当前的温度单位）。</FALCHM.CustomRangeMaxDesc>
+
+  <FALCHM.ShowTemperatureOverRooms>显示房间温度（数值）</FALCHM.ShowTemperatureOverRooms>
+  <FALCHM.ShowTemperatureOverRoomsDesc>当示意图存在时，依旧在房间中央以数值显示房间温度。</FALCHM.ShowTemperatureOverRoomsDesc>
+
+</LanguageData>
