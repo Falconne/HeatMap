@@ -6,6 +6,7 @@
   <description>Adds an overlay toggle button to show a temperature based colour gradient over indoor areas: green for the human comfort zone, getting bluer and redder for colder and hotter rooms respectively.</description>
   <supportedVersions>
     <li>1.1</li>
+    <li>1.0</li>
   </supportedVersions>
 
   <modDependencies>
