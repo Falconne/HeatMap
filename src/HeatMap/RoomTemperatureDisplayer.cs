@@ -97,7 +97,7 @@ namespace HeatMap
                 if (room == null)
                     continue;
 
-                var panelLength = 20f;
+                var panelLength = 40f;
                 var panelHeight = 20f;
                 var panelSize = new Vector2(panelLength, panelHeight);
                 var drawTopLeft = GenMapUI.LabelDrawPosFor(cell);
