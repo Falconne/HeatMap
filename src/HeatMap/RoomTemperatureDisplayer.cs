@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -9,7 +7,7 @@ namespace HeatMap
 {
     public class RoomTemperatureDisplayer
     {
-        public List<RoomWithLabelCell> RoomsWithLabelCells { get; } = new List<RoomWithLabelCell>();
+        public List<IntVec3> LabelCells { get; } = new List<IntVec3>();
 
         private int _nextUpdateTick;
 
@@ -24,7 +22,7 @@ namespace HeatMap
             _lastSeenMap = Find.CurrentMap;
 
             _nextUpdateTick = tick + updateDelay;
-            RoomsWithLabelCells.Clear();
+            LabelCells.Clear();
 
             var map = Find.CurrentMap;
             foreach (var room in map.regionGrid.allRooms)
@@ -33,7 +31,7 @@ namespace HeatMap
                     continue;
 
                 var cell = GetBestCellForRoom(room, map);
-                RoomsWithLabelCells.Add(new RoomWithLabelCell(room, cell));
+                LabelCells.Add(cell);
             }
         }
 
@@ -81,7 +79,7 @@ namespace HeatMap
 
         public void Reset()
         {
-            RoomsWithLabelCells.Clear();
+            LabelCells.Clear();
             _nextUpdateTick = 0;
         }
 
@@ -90,10 +88,13 @@ namespace HeatMap
             Text.Font = GameFont.Tiny;
             var map = Find.CurrentMap;
             CellRect currentViewRect = Find.CameraDriver.CurrentViewRect;
-            foreach (var roomWithLabelCell in RoomsWithLabelCells)
+            foreach (var cell in LabelCells)
             {
-                var cell = roomWithLabelCell.Cell;
                 if (!currentViewRect.Contains(cell))
+                    continue;
+
+                var room = cell.GetRoom(map, RegionType.Set_All);
+                if (room == null)
                     continue;
 
                 var panelLength = 20f;
@@ -101,7 +102,7 @@ namespace HeatMap
                 var panelSize = new Vector2(panelLength, panelHeight);
                 var drawTopLeft = GenMapUI.LabelDrawPosFor(cell);
                 var labelRect = new Rect(drawTopLeft.x, drawTopLeft.y, panelSize.x, panelSize.y);
-                Widgets.Label(labelRect, roomWithLabelCell.Room.Temperature.ToStringTemperature("F0"));
+                Widgets.Label(labelRect, room.Temperature.ToStringTemperature("F0"));
             }
         }
     }
