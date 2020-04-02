@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-	<HeatMap_0_17_2.modNameReadable>Heat Map</HeatMap_0_17_2.modNameReadable>
-	<HeatMap_0_17_2.content>アイコンを温度計に変更しました。</HeatMap_0_17_2.content>
+  <!-- <HeatMap_0_17_2.modNameReadable>Heat Map</HeatMap_0_17_2.modNameReadable>
+  <HeatMap_0_17_2.content>アイコンを温度計に変更しました。</HeatMap_0_17_2.content>
 
-	<HeatMap_0_17_3.modNameReadable>Heat Map</HeatMap_0_17_3.modNameReadable>
-	<HeatMap_0_17_3.content>オーバーレイの不透明度と更新速度をMod設定のダイアログで設定できるようになりました。</HeatMap_0_17_3.content>
+  <HeatMap_0_17_3.modNameReadable>Heat Map</HeatMap_0_17_3.modNameReadable>
+  <HeatMap_0_17_3.content>オーバーレイの不透明度と更新速度をMod設定のダイアログで設定できるようになりました。</HeatMap_0_17_3.content>
 
-	<HeatMap_0_17_4.modNameReadable>Heat Map</HeatMap_0_17_4.modNameReadable>
-	<HeatMap_0_17_4.content>オーバーレイはキーボードショートカットでオン/オフを切り替えることができるようになりました。初期設定のキー配置は\（バックスラッシュ）です。 これは、オプションのキーボード設定メニューで変更できます。</HeatMap_0_17_4.content>
+  <HeatMap_0_17_4.modNameReadable>Heat Map</HeatMap_0_17_4.modNameReadable>
+  <HeatMap_0_17_4.content>オーバーレイはキーボードショートカットでオン/オフを切り替えることができるようになりました。初期設定のキー配置は\（バックスラッシュ）です。 これは、オプションのキーボード設定メニューで変更できます。</HeatMap_0_17_4.content>
 
-	<HeatMap_0_18_2.modNameReadable>Heat Map</HeatMap_0_18_2.modNameReadable>
-	<HeatMap_0_18_2.content>温度計ウィジェットがUI画面の右上隅に追加され、現在の屋外温度（オーバーレイと同じ配色で重ね掛けされています）が表示されます。 これは、Mod設定で無効にすることができます。 このウィジェットをクリックすると、ヒートマップオーバーレイも切り替わります。</HeatMap_0_18_2.content>
+  <HeatMap_0_18_2.modNameReadable>Heat Map</HeatMap_0_18_2.modNameReadable>
+  <HeatMap_0_18_2.content>温度計ウィジェットがUI画面の右上隅に追加され、現在の屋外温度（オーバーレイと同じ配色で重ね掛けされています）が表示されます。 これは、Mod設定で無効にすることができます。 このウィジェットをクリックすると、ヒートマップオーバーレイも切り替わります。</HeatMap_0_18_2.content>
 
-	<HeatMap_0_18_3.modNameReadable>Heat Map</HeatMap_0_18_3.modNameReadable>
-	<HeatMap_0_18_3.content>屋外温度計のメモリリークを修正しました。</HeatMap_0_18_3.content>
+  <HeatMap_0_18_3.modNameReadable>Heat Map</HeatMap_0_18_3.modNameReadable>
+  <HeatMap_0_18_3.content>屋外温度計のメモリリークを修正しました。</HeatMap_0_18_3.content>
 
-	<HeatMap_1_0_2.modNameReadable>Heat Map</HeatMap_1_0_2.modNameReadable>
-	<HeatMap_1_0_2.content>・オーバーレイ表示をオンにすると、それぞれの部屋の温度が部屋の中央に小さなテキストで表示されます。 これは、Modの設定で無効にすることができます。|・Modの設定で、オーバーレイの表示色を青と赤のグラデーション境界をカスタム定義できるようになりました。 初期値ではこれらはゲームでの人間たちが快適と感じる温度の範囲で割り当てられていますが、快適さを優先できない極地バイオームのマップでは状況に合わせた範囲を設定することができます。</HeatMap_1_0_2.content>
+  <HeatMap_1_0_2.modNameReadable>Heat Map</HeatMap_1_0_2.modNameReadable>
+  <HeatMap_1_0_2.content>・オーバーレイ表示をオンにすると、それぞれの部屋の温度が部屋の中央に小さなテキストで表示されます。 これは、Modの設定で無効にすることができます。|・Modの設定で、オーバーレイの表示色を青と赤のグラデーション境界をカスタム定義できるようになりました。 初期値ではこれらはゲームでの人間たちが快適と感じる温度の範囲で割り当てられていますが、快適さを優先できない極地バイオームのマップでは状況に合わせた範囲を設定することができます。</HeatMap_1_0_2.content> -->
 
 </LanguageData>
