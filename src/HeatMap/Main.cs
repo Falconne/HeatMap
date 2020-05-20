@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Security.Policy;
-using HugsLib.Settings;
+﻿using HugsLib.Settings;
 using HugsLib.Utils;
 using RimWorld;
 using RimWorld.Planet;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
