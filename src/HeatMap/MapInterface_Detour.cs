@@ -27,7 +27,6 @@ namespace HeatMap
 		static void Postfix()
 		{
 			Main.Instance.ResetAll();
-			Log.Message("Notify_SwitchedMap");
 		}
 	}
 }
