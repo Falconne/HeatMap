@@ -193,8 +193,8 @@ namespace HeatMap
                     Drawer.SetDirty();
                     _nextUpdateTick = tick + updateDelay;
                 }
+				Drawer.CellBoolDrawerUpdate();
             }
-            Drawer.CellBoolDrawerUpdate();
         }
 
         public void Reset()
