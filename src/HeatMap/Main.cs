@@ -106,11 +106,6 @@ namespace HeatMap
             ResetAll();
         }
 
-        public override void MapLoaded(Map map)
-        {
-            ResetAll();
-        }
-
         public override void DefsLoaded()
         {
             _opacity = Settings.GetHandle(
@@ -230,7 +225,7 @@ namespace HeatMap
             return _opacity / 100f;
         }
 
-        private void ResetAll()
+		public void ResetAll()
         {
             _heatMap = null;
             TemperatureDisplayer.Reset();

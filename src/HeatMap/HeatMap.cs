@@ -188,11 +188,10 @@ namespace HeatMap
             {
                 Drawer.MarkForDraw();
                 var tick = Find.TickManager.TicksGame;
-                if (_nextUpdateTick == 0 || tick >= _nextUpdateTick || Find.CurrentMap != _lastSeenMap)
+                if (tick >= _nextUpdateTick)
                 {
                     Drawer.SetDirty();
                     _nextUpdateTick = tick + updateDelay;
-                    _lastSeenMap = Find.CurrentMap;
                 }
             }
             Drawer.CellBoolDrawerUpdate();
@@ -202,7 +201,6 @@ namespace HeatMap
         {
             _drawerInt = null;
             _nextUpdateTick = 0;
-            _lastSeenMap = null;
         }
 
         private CellBoolDrawer _drawerInt;
@@ -214,7 +212,5 @@ namespace HeatMap
         private Color _nextColor;
 
         private int _nextUpdateTick;
-
-        private Map _lastSeenMap;
     }
 }

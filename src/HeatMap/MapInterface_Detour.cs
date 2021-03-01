@@ -6,8 +6,8 @@ using Verse;
 namespace HeatMap
 {
     [HarmonyPatch(typeof(MapInterface), "MapInterfaceUpdate")]
-    public static class MapInterface_Detour
-    {
+    public static class MapInterface_MapInterfaceUpdate_Detour
+	{
         [HarmonyPostfix]
         static void Postfix()
         {
@@ -19,4 +19,15 @@ namespace HeatMap
             Main.Instance.UpdateHeatMap();
         }
     }
+
+	[HarmonyPatch(typeof(MapInterface), "Notify_SwitchedMap")]
+	internal static class MapInterface_Notify_SwitchedMap_Detour
+	{
+		[HarmonyPostfix]
+		static void Postfix()
+		{
+			Main.Instance.ResetAll();
+			Log.Message("Notify_SwitchedMap");
+		}
+	}
 }
