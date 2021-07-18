@@ -67,7 +67,7 @@ namespace HeatMap
 
             var midCell = new IntVec3(midX, 0, midZ);
 
-            if (midCell.GetRoom(map, RegionType.Set_All) == room)
+            if (midCell.GetRoom(map) == room)
                 return midCell;
 
             var possiblyBetterTopLeftCorner = topLeftCorner;
@@ -101,7 +101,7 @@ namespace HeatMap
                 //if (!currentViewRect.Contains(cell))
                 //    continue;
 
-                var room = cell.GetRoom(_map, RegionType.Set_All);
+                var room = cell.GetRoom(_map);
                 if (room == null)
                     continue;
 
