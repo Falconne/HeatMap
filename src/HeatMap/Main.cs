@@ -113,7 +113,7 @@ namespace HeatMap
                 "FALCHM.OverlayOpacityDesc".Translate(), 30,
                 Validators.IntRangeValidator(1, 100));
 
-            _opacity.OnValueChanged = val => { _heatMap?.Reset(); };
+            _opacity.ValueChanged += val => { _heatMap?.Reset(); };
 
             _updateDelay = Settings.GetHandle("updateDelay",
                 "FALCHM.UpdateDelay".Translate(),
@@ -134,7 +134,7 @@ namespace HeatMap
                 30,
                 Validators.IntRangeValidator(1, 100));
 
-            _outdoorThermometerOpacity.OnValueChanged = val => { _temperatureTextureCache.Clear(); };
+            _outdoorThermometerOpacity.ValueChanged += val => { _temperatureTextureCache.Clear(); };
 
 
             _showTemperatureOverRooms = Settings.GetHandle(
@@ -150,7 +150,7 @@ namespace HeatMap
                 "FALCHM.UseCustomeRangeDesc".Translate(),
                 false);
 
-            _useCustomRange.OnValueChanged = val => { ResetAll(); };
+            _useCustomRange.ValueChanged += val => { ResetAll(); };
 
 
             _customRangeMin = Settings.GetHandle("customRangeMin", "Unused", "Unused", 0);
@@ -185,7 +185,7 @@ namespace HeatMap
             customRangeMax.VisibilityPredicate = () => _useCustomRange;
 
 
-            customRangeMin.OnValueChanged = val =>
+            customRangeMin.ValueChanged += val =>
             {
                 if (customRangeMax <= customRangeMin)
                     customRangeMax.Value = customRangeMin + 1;
@@ -195,7 +195,7 @@ namespace HeatMap
             };
 
 
-            customRangeMax.OnValueChanged = val =>
+            customRangeMax.ValueChanged += val =>
             {
                 if (customRangeMin >= customRangeMax)
                     customRangeMin.Value = customRangeMax - 1;

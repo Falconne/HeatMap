@@ -129,8 +129,7 @@ namespace HeatMap
             if (map.fogGrid.IsFogged(index))
                 return false;
 
-            var room = map.cellIndices.IndexToCell(index).GetRoom(
-                map, RegionType.Set_All);
+            var room = map.cellIndices.IndexToCell(index).GetRoom(map);
 
             if (room != null && !room.PsychologicallyOutdoors)
             {
