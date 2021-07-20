@@ -29,7 +29,7 @@ namespace HeatMap
 
 			foreach (var room in _map.regionGrid.allRooms)
             {
-                if (room.PsychologicallyOutdoors || room.Fogged || room.IsDoorway)
+                if (room.PsychologicallyOutdoors || room.Fogged || room.IsDoorway || room.BorderCells.Count() == 0)
                     continue;
 
                 var cell = GetBestCellForRoom(room, _map);
