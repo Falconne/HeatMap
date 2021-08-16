@@ -29,21 +29,60 @@ namespace HeatMap
             _heatMap.Update(_updateDelay);
         }
 
-        public void UpdateOutdoorThermometer()
+		public void UpdateOutdoorThermometer()
         {
             if (!_showOutdoorThermometer)
                 return;
 
             if (_heatMap == null)
                 return;
+			
+			var outRect = new Rect(
+				UI.screenWidth - Mathf.Clamp(_draggingThermometer ? _dragThermometerRight : _outdoorThermometerRight, _boxSize, UI.screenWidth),
+				Mathf.Clamp(_draggingThermometer ? _dragThermometerTop : _outdoorThermometerTop, 0, UI.screenHeight - _boxSize),	
+				_boxSize, _boxSize);
+			if (!_outdoorThermometerFixed && Event.current.isMouse)
+			{
+				switch (Event.current.type)
+				{
+					case EventType.MouseDown:
+						if (Mouse.IsOver(outRect) && Event.current.modifiers == EventModifiers.Shift)
+						{
+							Event.current.Use();
 
-            const float boxSize = 62f;
-            var horizontalOffset = 8f;
-            if (Prefs.AdaptiveTrainingEnabled)
-                horizontalOffset += 216f;
+							_dragThermometerRight = _outdoorThermometerRight.Value;
+							_dragThermometerTop = _outdoorThermometerTop.Value;
 
-            var outRect = new Rect(UI.screenWidth - horizontalOffset - boxSize, 8f, boxSize, boxSize);
-            var temperature = Find.CurrentMap.mapTemperature.OutdoorTemp;
+							_draggingThermometer = true;
+						}
+						break;
+					case EventType.MouseDrag:
+						if (_draggingThermometer)
+						{
+							Event.current.Use();
+							
+							_dragThermometerRight -= Event.current.delta.x;
+							_dragThermometerRight = Mathf.Clamp(_dragThermometerRight, _boxSize, UI.screenWidth);
+							_dragThermometerTop += Event.current.delta.y;
+							_dragThermometerTop = Mathf.Clamp(_dragThermometerTop, 0, UI.screenHeight - _boxSize);
+							outRect = new Rect(outRect.x - _dragThermometerRight, outRect.y + _dragThermometerTop, _boxSize, _boxSize);
+						}
+						break;
+					case EventType.MouseUp:
+						if (_draggingThermometer)
+						{
+							Event.current.Use();
+
+							_outdoorThermometerRight.Value = _dragThermometerRight;
+							_outdoorThermometerTop.Value = _dragThermometerTop;
+
+							_draggingThermometer = false;
+						}
+						break;
+				}
+			}
+			
+			var temperature = Find.CurrentMap.mapTemperature.OutdoorTemp;
             var textureIndex = _heatMap.GetIndexForTemperature(temperature);
             if (!_temperatureTextureCache.ContainsKey(textureIndex))
             {
@@ -121,6 +160,7 @@ namespace HeatMap
                 100,
                 Validators.IntRangeValidator(1, 9999));
 
+
             _showOutdoorThermometer = Settings.GetHandle(
                 "showOutdoorThermometer",
                 "FALCHM.ShowOutDoorThermometer".Translate(),
@@ -133,11 +173,28 @@ namespace HeatMap
                 "FALCHM.ThermometerOpacityDesc".Translate(),
                 30,
                 Validators.IntRangeValidator(1, 100));
-
             _outdoorThermometerOpacity.ValueChanged += val => { _temperatureTextureCache.Clear(); };
 
+			_outdoorThermometerFixed = Settings.GetHandle(
+				"outdoorThermometerFixed",
+				"FALCHM.ThermometerFixed".Translate(),
+				"FALCHM.ThermometerFixedDesc".Translate(),
+                false);
 
-            _showTemperatureOverRooms = Settings.GetHandle(
+			_outdoorThermometerRight = Settings.GetHandle(
+				"outdoorThermometerRight",
+				"FALCHM.ThermometerRight".Translate(),
+				"FALCHM.ThermometerRightDesc".Translate(),
+				8f + _boxSize);
+
+			_outdoorThermometerTop = Settings.GetHandle(
+				"outdoorThermometerTop",
+				"FALCHM.ThermometerTop".Translate(),
+				"FALCHM.ThermometerTopDesc".Translate(),
+				8f);
+
+
+			_showTemperatureOverRooms = Settings.GetHandle(
                 "showTemperatureOverRooms",
                 "FALCHM.ShowTemperatureOverRooms".Translate(),
                 "FALCHM.ShowTemperatureOverRoomsDesc".Translate(),
@@ -149,7 +206,6 @@ namespace HeatMap
                 "FALCHM.UseCustomeRange".Translate(),
                 "FALCHM.UseCustomeRangeDesc".Translate(),
                 false);
-
             _useCustomRange.ValueChanged += val => { ResetAll(); };
 
 
@@ -258,23 +314,26 @@ namespace HeatMap
         public RoomTemperatureDisplayer TemperatureDisplayer { get; } = new RoomTemperatureDisplayer();
 
         private HeatMap _heatMap;
+		private const float _boxSize = 62f;
+		private bool _draggingThermometer = false;
+		private float _dragThermometerRight = 0f;
+		private float _dragThermometerTop = 0f;
 
-        private readonly Dictionary<int, Texture2D> _temperatureTextureCache = new Dictionary<int, Texture2D>();
+		private readonly Dictionary<int, Texture2D> _temperatureTextureCache = new Dictionary<int, Texture2D>();
 
         private SettingHandle<int> _opacity;
-
         private SettingHandle<int> _updateDelay;
 
         private SettingHandle<bool> _showOutdoorThermometer;
-
         private SettingHandle<int> _outdoorThermometerOpacity;
+		private SettingHandle<bool> _outdoorThermometerFixed;
+		private SettingHandle<float> _outdoorThermometerRight;
+		private SettingHandle<float> _outdoorThermometerTop;
 
-        private SettingHandle<int> _customRangeMin;
+		private SettingHandle<bool> _showTemperatureOverRooms;
 
+		private SettingHandle<bool> _useCustomRange;
+		private SettingHandle<int> _customRangeMin;
         private SettingHandle<int> _customRangeMax;
-
-        private SettingHandle<bool> _useCustomRange;
-
-        private SettingHandle<bool> _showTemperatureOverRooms;
     }
 }
