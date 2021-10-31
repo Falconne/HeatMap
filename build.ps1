@@ -142,7 +142,7 @@ function doPostBuild
     Copy-Item -Force $targetPath $distAssemblyDir
 
     $modStructureAssemblyLocation = "$PSScriptRoot\mod-structure\v$(getGameVersion)\Assemblies"
-	removePath $modStructureAssemblyLocation
+    removePath $modStructureAssemblyLocation
     mkdir $modStructureAssemblyLocation | Out-Null
     Copy-Item -Force $targetPath $modStructureAssemblyLocation
 
