@@ -9,28 +9,30 @@ namespace HeatMap
     {
         public List<IntVec3> LabelCells { get; } = new List<IntVec3>();
 
-        private int _nextUpdateTick;
-
-        private Map _lastSeenMap;
+		private Map _map = null;
+        private int _nextUpdateTick = 0;
 
         public void Update(int updateDelay)
         {
             var tick = Find.TickManager.TicksGame;
-            if (_nextUpdateTick != 0 && tick < _nextUpdateTick && Find.CurrentMap == _lastSeenMap)
+            if (tick < _nextUpdateTick)
                 return;
-
-            _lastSeenMap = Find.CurrentMap;
 
             _nextUpdateTick = tick + updateDelay;
             LabelCells.Clear();
 
-            var map = Find.CurrentMap;
-            foreach (var room in map.regionGrid.allRooms)
+			if (_map == null) // Shouldn't happen, but better to catch it anyway
+			{
+				Log.Message($"HeatMap: RoomTemperatureDisplayer.Update: {nameof(_map)} == null!");
+				_map = Find.CurrentMap;
+			}
+
+			foreach (var room in _map.regionGrid.allRooms)
             {
-                if (room.PsychologicallyOutdoors || room.Fogged || room.IsDoorway)
+                if (room.PsychologicallyOutdoors || room.Fogged || room.IsDoorway || room.BorderCells.Count() == 0)
                     continue;
 
-                var cell = GetBestCellForRoom(room, map);
+                var cell = GetBestCellForRoom(room, _map);
                 LabelCells.Add(cell);
             }
         }
@@ -65,7 +67,7 @@ namespace HeatMap
 
             var midCell = new IntVec3(midX, 0, midZ);
 
-            if (midCell.GetRoom(map, RegionType.Set_All) == room)
+            if (midCell.GetRoom(map) == room)
                 return midCell;
 
             var possiblyBetterTopLeftCorner = topLeftCorner;
@@ -78,30 +80,33 @@ namespace HeatMap
         }
 
         public void Reset()
-        {
-            LabelCells.Clear();
+		{
+			LabelCells.Clear();
             _nextUpdateTick = 0;
-        }
-
-        public void OnGUI()
+			_map = Find.CurrentMap;
+		}
+		
+		public void OnGUI()
         {
+			if (_map == null) // Shouldn't happen, but better to catch it anyway
+			{
+				Log.Message($"HeatMap: RoomTemperatureDisplayer.OnGUI: {nameof(_map)} == null!");
+				_map = Find.CurrentMap;
+			}
+
             Text.Font = GameFont.Tiny;
-            var map = Find.CurrentMap;
-            CellRect currentViewRect = Find.CameraDriver.CurrentViewRect;
+            //CellRect currentViewRect = Find.CameraDriver.CurrentViewRect;
             foreach (var cell in LabelCells)
             {
-                if (!currentViewRect.Contains(cell))
-                    continue;
+                //if (!currentViewRect.Contains(cell))
+                //    continue;
 
-                var room = cell.GetRoom(map, RegionType.Set_All);
+                var room = cell.GetRoom(_map);
                 if (room == null)
                     continue;
 
-                var panelLength = 40f;
-                var panelHeight = 20f;
-                var panelSize = new Vector2(panelLength, panelHeight);
                 var drawTopLeft = GenMapUI.LabelDrawPosFor(cell);
-                var labelRect = new Rect(drawTopLeft.x, drawTopLeft.y, panelSize.x, panelSize.y);
+                var labelRect = new Rect(drawTopLeft.x, drawTopLeft.y, 40f, 20f);
                 Widgets.Label(labelRect, room.Temperature.ToStringTemperature("F0"));
             }
         }

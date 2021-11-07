@@ -12,7 +12,16 @@
   <FALCHM.ThermometerOpacity>Opacity of thermometer</FALCHM.ThermometerOpacity>
   <FALCHM.ThermometerOpacityDesc>Reduce this value to make the outdoor temperature thermometer background color more transparent.</FALCHM.ThermometerOpacityDesc>
 
-  <FALCHM.ThermometerTooltip>Outdoor temperature. Click to toggle heat map overlay. This widget can be disabled in Mod Settings.</FALCHM.ThermometerTooltip>
+  <FALCHM.ThermometerFixed>Lock thermometer position</FALCHM.ThermometerFixed>
+  <FALCHM.ThermometerFixedDesc>Locks the thermometer widget in place, disabling shift-click dragging.</FALCHM.ThermometerFixedDesc>
+
+  <FALCHM.ThermometerRight>Right margin of thermometer</FALCHM.ThermometerRight>
+  <FALCHM.ThermometerRightDesc>Changes the margin between the thermometer widget and the right of the screen. The widget can be dragged using shift-click while ingame.</FALCHM.ThermometerRightDesc>
+
+  <FALCHM.ThermometerTop>Top margin of thermometer</FALCHM.ThermometerTop>
+  <FALCHM.ThermometerTopDesc>Changes the margin between the thermometer widget and the top of the screen. The widget can be dragged using shift-click while ingame.</FALCHM.ThermometerTopDesc>
+
+  <FALCHM.ThermometerTooltip>Outdoor temperature. Click to toggle heat map overlay. Shift-click and drag to move the widget. This widget can be disabled in Mod Settings.</FALCHM.ThermometerTooltip>
   <FALCHM.ShowHeatMap>Show Heat Map</FALCHM.ShowHeatMap>
 
   <FALCHM.UseCustomeRange>Use custom range</FALCHM.UseCustomeRange>

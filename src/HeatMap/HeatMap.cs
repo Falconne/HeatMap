@@ -129,8 +129,7 @@ namespace HeatMap
             if (map.fogGrid.IsFogged(index))
                 return false;
 
-            var room = map.cellIndices.IndexToCell(index).GetRoom(
-                map, RegionType.Set_All);
+            var room = map.cellIndices.IndexToCell(index).GetRoom(map);
 
             if (room != null && !room.PsychologicallyOutdoors)
             {
@@ -188,21 +187,19 @@ namespace HeatMap
             {
                 Drawer.MarkForDraw();
                 var tick = Find.TickManager.TicksGame;
-                if (_nextUpdateTick == 0 || tick >= _nextUpdateTick || Find.CurrentMap != _lastSeenMap)
+                if (tick >= _nextUpdateTick)
                 {
                     Drawer.SetDirty();
                     _nextUpdateTick = tick + updateDelay;
-                    _lastSeenMap = Find.CurrentMap;
                 }
+				Drawer.CellBoolDrawerUpdate();
             }
-            Drawer.CellBoolDrawerUpdate();
         }
 
         public void Reset()
         {
             _drawerInt = null;
             _nextUpdateTick = 0;
-            _lastSeenMap = null;
         }
 
         private CellBoolDrawer _drawerInt;
@@ -214,7 +211,5 @@ namespace HeatMap
         private Color _nextColor;
 
         private int _nextUpdateTick;
-
-        private Map _lastSeenMap;
     }
 }
