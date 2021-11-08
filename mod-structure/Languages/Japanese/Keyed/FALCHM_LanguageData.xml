@@ -34,6 +34,6 @@
   <FALCHM.CustomRangeMaxDesc>温度範囲の赤色表示される最高温度です。これ以上の気温は赤色になります。現在の温度単位(℃/F)を使用</FALCHM.CustomRangeMaxDesc>
 
   <FALCHM.ShowTemperatureOverRooms>部屋上に温度を表示</FALCHM.ShowTemperatureOverRooms>
-  <FALCHM.ShowTemperatureOverRoomsDesc>度のオーバーレイ表示が有効になっている時に、各部屋の中央に室温が表示されます。</FALCHM.ShowTemperatureOverRoomsDesc>
+  <FALCHM.ShowTemperatureOverRoomsDesc>温度のオーバーレイ表示が有効になっている時に、各部屋の中央に室温が表示されます。</FALCHM.ShowTemperatureOverRoomsDesc>
 
 </LanguageData>
