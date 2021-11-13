@@ -21,7 +21,7 @@
   <FALCHM.ThermometerTop>温度計の上マージン</FALCHM.ThermometerTop>
   <FALCHM.ThermometerTopDesc>温度計のウィジェット(widget/小型表示)とゲーム画面上部の間の余白距離を変更します。ウィジェット(小型表示)をドラッグするには、Shiftキーを押しながらクリックします。</FALCHM.ThermometerTopDesc>
 
-  <FALCHM.ThermometerTooltip>屋外温度です。クリックすると、ヒートマップのオーバーレイを切り替えます。Shiftキーを押しながらクリックするとドラッグ可能になり、ウィジェット(widget/小型表示)を移動できます。このウィジェット(小型表示)はMod設定で無効にすることができます。</FALCHM.ThermometerTooltip>
+  <FALCHM.ThermometerTooltip>屋外温度です。\nクリックすると、ヒートマップのオーバーレイを切り替えます。\nShiftキーを押しながらクリックするとドラッグ可能になり、ウィジェット(widget/小型表示)を移動可能で、mod設定で位置を固定できます。\nこのウィジェット(小型表示)はMod設定で無効にすることができます。</FALCHM.ThermometerTooltip>
   <FALCHM.ShowHeatMap>温度分布を表示</FALCHM.ShowHeatMap>
 
   <FALCHM.UseCustomeRange>カスタム範囲有効</FALCHM.UseCustomeRange>
