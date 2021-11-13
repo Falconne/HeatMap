@@ -12,7 +12,16 @@
   <FALCHM.ThermometerOpacity>温度計の不透明度</FALCHM.ThermometerOpacity>
   <FALCHM.ThermometerOpacityDesc>屋外温度の温度計の背景色をより透明にするには、この値を減らします。</FALCHM.ThermometerOpacityDesc>
 
-  <FALCHM.ThermometerTooltip>屋外温度。クリックすると、ヒートマップのオーバーレイを切り替えます。このウィジェット(widget/小型表示)はMod設定で無効にすることができます。</FALCHM.ThermometerTooltip>
+  <FALCHM.ThermometerFixed>温度計の位置を固定</FALCHM.ThermometerFixed>
+  <FALCHM.ThermometerFixedDesc>屋外温度の温度計のウィジェット(widget/小型表示)を初期設定の位置に固定して、Shiftキーを押しながらクリックしてドラッグできるのを無効化します。</FALCHM.ThermometerFixedDesc>
+
+  <FALCHM.ThermometerRight>温度計の右マージン</FALCHM.ThermometerRight>
+  <FALCHM.ThermometerRightDesc>温度計のウィジェット(widget/小型表示)とゲーム画面右端との間の余白距離を変更します。ウィジェット(小型表示)をドラッグするには、Shiftキーを押しながらクリックします。</FALCHM.ThermometerRightDesc>
+
+  <FALCHM.ThermometerTop>温度計の上マージン</FALCHM.ThermometerTop>
+  <FALCHM.ThermometerTopDesc>温度計のウィジェット(widget/小型表示)とゲーム画面上部の間の余白距離を変更します。ウィジェット(小型表示)をドラッグするには、Shiftキーを押しながらクリックします。</FALCHM.ThermometerTopDesc>
+
+  <FALCHM.ThermometerTooltip>屋外温度です。クリックすると、ヒートマップのオーバーレイを切り替えます。Shiftキーを押しながらクリックするとドラッグ可能になり、ウィジェット(widget/小型表示)を移動できます。このウィジェット(小型表示)はMod設定で無効にすることができます。</FALCHM.ThermometerTooltip>
   <FALCHM.ShowHeatMap>温度分布を表示</FALCHM.ShowHeatMap>
 
   <FALCHM.UseCustomeRange>カスタム範囲有効</FALCHM.UseCustomeRange>
@@ -25,6 +34,6 @@
   <FALCHM.CustomRangeMaxDesc>温度範囲の赤色表示される最高温度です。これ以上の気温は赤色になります。現在の温度単位(℃/F)を使用</FALCHM.CustomRangeMaxDesc>
 
   <FALCHM.ShowTemperatureOverRooms>部屋上に温度を表示</FALCHM.ShowTemperatureOverRooms>
-  <FALCHM.ShowTemperatureOverRoomsDesc>度のオーバーレイ表示が有効になっている時に、各部屋の中央に室温が表示されます。</FALCHM.ShowTemperatureOverRoomsDesc>
+  <FALCHM.ShowTemperatureOverRoomsDesc>温度のオーバーレイ表示が有効になっている時に、各部屋の中央に室温が表示されます。</FALCHM.ShowTemperatureOverRoomsDesc>
 
 </LanguageData>
