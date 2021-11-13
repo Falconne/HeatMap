@@ -3,6 +3,7 @@ using HugsLib.Utils;
 using RimWorld;
 using RimWorld.Planet;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using Verse;
 
@@ -36,11 +37,17 @@ namespace HeatMap
 
             if (_heatMap == null)
                 return;
-			
-			var outRect = new Rect(
-				UI.screenWidth - Mathf.Clamp(_draggingThermometer ? _dragThermometerRight : _outdoorThermometerRight, _boxSize, UI.screenWidth),
-				Mathf.Clamp(_draggingThermometer ? _dragThermometerTop : _outdoorThermometerTop, 0, UI.screenHeight - _boxSize),	
-				_boxSize, _boxSize);
+
+			var right = Mathf.Clamp(_draggingThermometer ? _dragThermometerRight : _outdoorThermometerRight, _boxSize, UI.screenWidth);
+			var top = Mathf.Clamp(_draggingThermometer ? _dragThermometerTop : _outdoorThermometerTop, 0, UI.screenHeight - _boxSize);
+			var outRect = new Rect(UI.screenWidth - right, top, _boxSize, _boxSize);
+			if (TutorSystem.AdaptiveTrainingEnabled && Find.PlaySettings.showLearningHelper)
+			{
+				if (typeof(LearningReadout).GetField("windowRect", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(Find.Tutor.learningReadout) is Rect helpRect
+					&& helpRect.Overlaps(outRect) == true)
+						outRect.x = helpRect.x - _boxSize - 5f;
+			}
+
 			if (!_outdoorThermometerFixed && Event.current.isMouse)
 			{
 				switch (Event.current.type)
@@ -65,7 +72,7 @@ namespace HeatMap
 							_dragThermometerRight = Mathf.Clamp(_dragThermometerRight, _boxSize, UI.screenWidth);
 							_dragThermometerTop += Event.current.delta.y;
 							_dragThermometerTop = Mathf.Clamp(_dragThermometerTop, 0, UI.screenHeight - _boxSize);
-							outRect = new Rect(outRect.x - _dragThermometerRight, outRect.y + _dragThermometerTop, _boxSize, _boxSize);
+							//outRect = new Rect(outRect.x - _dragThermometerRight, outRect.y + _dragThermometerTop, _boxSize, _boxSize); // repositioning is processed on next update
 						}
 						break;
 					case EventType.MouseUp:

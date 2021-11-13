@@ -21,7 +21,10 @@
   <FALCHM.ThermometerTop>Top margin of thermometer</FALCHM.ThermometerTop>
   <FALCHM.ThermometerTopDesc>Changes the margin between the thermometer widget and the top of the screen. The widget can be dragged using shift-click while ingame.</FALCHM.ThermometerTopDesc>
 
-  <FALCHM.ThermometerTooltip>Outdoor temperature. Click to toggle heat map overlay. Shift-click and drag to move the widget. This widget can be disabled in Mod Settings.</FALCHM.ThermometerTooltip>
+  <FALCHM.ThermometerTooltip>Outdoor temperature. 
+Click to toggle heat map overlay. 
+Shift-click and drag to move the widget, the position can be locked in the mod settings.
+This widget can be disabled in mod settings.</FALCHM.ThermometerTooltip>
   <FALCHM.ShowHeatMap>Show Heat Map</FALCHM.ShowHeatMap>
 
   <FALCHM.UseCustomeRange>Use custom range</FALCHM.UseCustomeRange>
