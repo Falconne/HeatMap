@@ -27,7 +27,8 @@ namespace HeatMap
             if (_heatMap == null)
                 _heatMap = new HeatMap();
 
-            _heatMap.Update(_updateDelay);
+			if (_opacity > 0)
+				_heatMap.Update(_updateDelay);
         }
 
 		public void UpdateOutdoorThermometer()
@@ -157,7 +158,7 @@ namespace HeatMap
             _opacity = Settings.GetHandle(
                 "opacity", "FALCHM.OverlayOpacity".Translate(),
                 "FALCHM.OverlayOpacityDesc".Translate(), 30,
-                Validators.IntRangeValidator(1, 100));
+                Validators.IntRangeValidator(0, 100));
 
             _opacity.ValueChanged += val => { _heatMap?.Reset(); };
 
