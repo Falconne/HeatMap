@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- EN: Opacity of overlay -->
+  <FALCHM.OverlayOpacity>Overlay: Transparenz</FALCHM.OverlayOpacity>
+  <!-- EN: Reduce this value to make the overlay more transparent. -->
+  <FALCHM.OverlayOpacityDesc>Verringere diesen Wert, um das Overlay transparenter zu machen.</FALCHM.OverlayOpacityDesc>
+
+  <!-- EN: Overlay update delay -->
+  <FALCHM.UpdateDelay>Overlay: Aktualisierungsverzögerung</FALCHM.UpdateDelay>
+  <!-- EN: Number of ticks delay between overlay updates while game is unpaused. Lower numbers provide smoother updates, but may affect performance on low end machines. -->
+  <FALCHM.UpdateDelayDesc>Anzahl der Ticks zwischen den Aktualisierungen des Overlays, wenn das Spiel nicht pausiert ist. Niedrigere Werte sorgen für flüssigere Aktualisierungen, können aber die Leistung von Low-End-Rechnern beeinträchtigen.</FALCHM.UpdateDelayDesc>
+
+  <!-- EN: Show outdoor thermometer -->
+  <FALCHM.ShowOutDoorThermometer>Thermometer für draußen anzeigen</FALCHM.ShowOutDoorThermometer>
+  <!-- EN: Displays a widget in the top right hand corner of the UI showing current outdoor temperature. -->
+  <FALCHM.ShowOutDoorThermometerDesc>Zeigt ein UI-Widget in der oberen rechten Ecke an, das die aktuelle Außentemperatur anzeigt.</FALCHM.ShowOutDoorThermometerDesc>
+
+  <!-- EN: Opacity of thermometer -->
+  <FALCHM.ThermometerOpacity>Thermometer: Transparenz</FALCHM.ThermometerOpacity>
+  <!-- EN: Reduce this value to make the outdoor temperature thermometer background color more transparent. -->
+  <FALCHM.ThermometerOpacityDesc>Verringere diesen Wert, um die Hintergrundfarbe des Thermometers transparenter zu machen.</FALCHM.ThermometerOpacityDesc>
+
+  <!-- EN: Lock thermometer position -->
+  <FALCHM.ThermometerFixed>Thermometer: Position sperren</FALCHM.ThermometerFixed>
+  <!-- EN: Locks the thermometer widget in place, disabling shift-click dragging. -->
+  <FALCHM.ThermometerFixedDesc>Verhindert, dass das Thermometer-Widget mit einem Umschalt+Klick verschoben werden kann.</FALCHM.ThermometerFixedDesc>
+
+  <!-- EN: Right margin of thermometer -->
+  <FALCHM.ThermometerRight>Thermometer: Rechter Abstand</FALCHM.ThermometerRight>
+  <!-- EN: Changes the margin between the thermometer widget and the right of the screen. The widget can be dragged using shift-click while ingame. -->
+  <FALCHM.ThermometerRightDesc>Ändert den Abstand zwischen dem Thermometer-Widget und dem rechten Bildschirmrand. Das Widget kann mit einem Umschalt+Klick verschoben werden.</FALCHM.ThermometerRightDesc>
+
+  <!-- EN: Top margin of thermometer -->
+  <FALCHM.ThermometerTop>Thermometer: Oberer Abstand</FALCHM.ThermometerTop>
+  <!-- EN: Changes the margin between the thermometer widget and the top of the screen. The widget can be dragged using shift-click while ingame. -->
+  <FALCHM.ThermometerTopDesc>Ändert den Abstand zwischen dem Thermometer-Widget und dem oberen Bildschirmrand. Das Widget kann mit einem Umschalt+Klick verschoben werden.</FALCHM.ThermometerTopDesc>
+
+  <!-- EN: Outdoor temperature.\nClick to toggle heat map overlay.\nShift-click and drag to move the widget, the position can be locked in the mod settings.\nThis widget can be disabled in mod settings. -->
+  <FALCHM.ThermometerTooltip>Außentemperatur.\n\nKlicke darauf, um das Heatmap-Overlay ein-/auszuschalten.\n\nHalte Umschalt+Klick gedrückt, um das Widget zu verschieben; die Position kann in den Mod-Einstellungen gesperrt werden.\n\nDieses Widget kann in den Mod-Einstellungen deaktiviert werden.</FALCHM.ThermometerTooltip>
+  <!-- EN: Show Heat Map -->
+  <FALCHM.ShowHeatMap>Heat Map anzeigen</FALCHM.ShowHeatMap>
+
+  <!-- EN: Use custom range -->
+  <FALCHM.UseCustomeRange>Benutzerdef. Wohlfühlbereich</FALCHM.UseCustomeRange>
+  <!-- EN: When off, the colour gradient automatically maps to the human comfort range as defined by the game.\n\nWhen on, allows you to set a custom boundary for the blue and red ends of the gradient, in current temperature units -->
+  <FALCHM.UseCustomeRangeDesc>Im deaktivierten Zustand wird der Farbverlauf automatisch auf den vom Spiel definierten menschlichen Wohlfühlbereich abgestimmt.\n\nIm aktivierten Zustand kannst du einen benutzerdefinierten Grenzwert für das blaue und rote Ende des Farbverlaufs festlegen, auf Basis der aktuell eingestellten Temperatureinheit</FALCHM.UseCustomeRangeDesc>
+
+  <!-- EN: Custom range min -->
+  <FALCHM.CustomRangeMin>Untergrenze des benutzerdef. Wohlfühlbereichs</FALCHM.CustomRangeMin>
+  <!-- EN: Blue end of gradient. Temperatures below this will be blue. Use current temperature units -->
+  <FALCHM.CustomRangeMinDesc>Blaues Ende des Farbverlaufs. Temperaturen unterhalb dieses Wertes werden blau dargestellt. Verwendet die aktuell eingestellte Temperatureinheit</FALCHM.CustomRangeMinDesc>
+
+  <!-- EN: Custom range max -->
+  <FALCHM.CustomRangeMax>Obergrenze des benutzerdef. Wohlfühlbereichs</FALCHM.CustomRangeMax>
+  <!-- EN: Red end of gradient. Temperatures above this will be red. Use current temperature units -->
+  <FALCHM.CustomRangeMaxDesc>Rotes Ende des Farbverlaufs. Temperaturen oberhalb dieses Wertes werden rot dargestellt. Verwendet die aktuell eingestellte Temperatureinheit</FALCHM.CustomRangeMaxDesc>
+
+  <!-- EN: Show temperature over rooms -->
+  <FALCHM.ShowTemperatureOverRooms>Temperatur über den Räumen anzeigen</FALCHM.ShowTemperatureOverRooms>
+  <!-- EN: When overlay is on, this will also display the room temperature over the centre of the room. -->
+  <FALCHM.ShowTemperatureOverRoomsDesc>Wenn das Overlay aktiviert ist, wird gleichzeitig auch die Raumtemperatur in der Mitte des Raums angezeigt.</FALCHM.ShowTemperatureOverRoomsDesc>
+
+</LanguageData>
