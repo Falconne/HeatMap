@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- EN: Heat Map -->
+  <HeatMap.label>Heat Map</HeatMap.label>
+  <!-- EN: Shortcuts for the Heat Map mod. -->
+  <HeatMap.description>Tastenkürzel für die Heat Map Mod.</HeatMap.description>
+
+</LanguageData>
