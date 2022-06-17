@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <FALCHM.OverlayOpacity>Прозрачность наложения</FALCHM.OverlayOpacity>
+  <FALCHM.OverlayOpacityDesc>Снижение этого значения делает наложение боле прозрачным.</FALCHM.OverlayOpacityDesc>
+
+  <FALCHM.UpdateDelay>Задержка обновления наложения</FALCHM.UpdateDelay>
+  <FALCHM.UpdateDelayDesc>Количество тиков между обновлениями наложения, пока игра не на паузе. Меньшие значения обеспечивают более плавное обновление, но могут повлиять на производительность на слабых компьютерах.</FALCHM.UpdateDelayDesc>
+
+  <FALCHM.ShowOutDoorThermometer>Показать внешний термометр</FALCHM.ShowOutDoorThermometer>
+  <FALCHM.ShowOutDoorThermometerDesc>Отображает виджет в верхнем правом углу пользовательского интерфейса, показывающий текущую температуру наружного воздуха.</FALCHM.ShowOutDoorThermometerDesc>
+
+  <FALCHM.ThermometerOpacity>Прозрачность термометра</FALCHM.ThermometerOpacity>
+  <FALCHM.ThermometerOpacityDesc>Уменьшьте это значение, что-бы сделать цвет фона наружного термометра более прозрачным.</FALCHM.ThermometerOpacityDesc>
+
+  <FALCHM.ThermometerFixed>Заблоктровоть позицию термометра</FALCHM.ThermometerFixed>
+  <FALCHM.ThermometerFixedDesc>Фиксирует виджет термометра на месте, отключая перетаскивание с нажатой клавишей Shift.</FALCHM.ThermometerFixedDesc>
+
+  <FALCHM.ThermometerRight>Правый край термометра</FALCHM.ThermometerRight>
+  <FALCHM.ThermometerRightDesc>Изменяет границу между виджетом термометра и правой частью экрана. Виджет можно перетаскивать, удерживая клавишу Shift, во время игры.</FALCHM.ThermometerRightDesc>
+
+  <FALCHM.ThermometerTop>Вехний край термометра</FALCHM.ThermometerTop>
+  <FALCHM.ThermometerTopDesc>Изменяет границу между виджетом термометра и верхней частью экрана. Виджет можно перетаскивать, удерживая клавишу Shift, во время игры.</FALCHM.ThermometerTopDesc>
+
+  <FALCHM.ThermometerTooltip>Уличная температура. 
+Щёлкните, чтобы переключить наложение тепловой карты. 
+Зажмите Shift и перетащите, чтобы переместить виджет. Положение можно заблокировать в настройках мода.
+Этот виджет можно отключить в настройках мода.</FALCHM.ThermometerTooltip>
+  <FALCHM.ShowHeatMap>Показать карту температур</FALCHM.ShowHeatMap>
+
+  <FALCHM.UseCustomeRange>Использовать свой диапазон</FALCHM.UseCustomeRange>
+  <FALCHM.UseCustomeRangeDesc>Когда он выключен, цветовой градиент автоматически сопоставляется с диапазоном комфорта человека, как определено игрой.
+
+Когда включено, позволяет установить пользовательскую границу для синего и красного концов градиента в текущих единицах измерения температуры.</FALCHM.UseCustomeRangeDesc>
+
+  <FALCHM.CustomRangeMin>Минимум диапазона</FALCHM.CustomRangeMin>
+  <FALCHM.CustomRangeMinDesc>Температуры ниже этого будут синими. Использует текущие единицы измерения температуры</FALCHM.CustomRangeMinDesc>
+
+  <FALCHM.CustomRangeMax>Максимум диапазона</FALCHM.CustomRangeMax>
+  <FALCHM.CustomRangeMaxDesc>Температуры выше этого будут красными. Использует текущие единицы измерения температуры</FALCHM.CustomRangeMaxDesc>
+
+  <FALCHM.ShowTemperatureOverRooms>Показывать температуру по комнатам</FALCHM.ShowTemperatureOverRooms>
+  <FALCHM.ShowTemperatureOverRoomsDesc>Показывает температуру по центру комнаты.</FALCHM.ShowTemperatureOverRoomsDesc>
+</LanguageData>
