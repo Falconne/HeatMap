@@ -24,8 +24,8 @@ namespace HeatMap
 
 		private static void CreateCustomMap()
 		{
-			var minComfortTemp = HeatMap.Instance.CustomRangeComfortableMin;
-			var maxComfortTemp = HeatMap.Instance.CustomRangeComfortableMax;
+			var minComfortTemp = HeatMap.Instance.CustomRangeComfortMin;
+			var maxComfortTemp = HeatMap.Instance.CustomRangeComfortMax;
 
 			MappedTemperatureRange = new IntRange(HeatMap.Instance.CustomRangeMin, HeatMap.Instance.CustomRangeMax);
 			MappedColors = CreateColorGradient(MappedTemperatureRange, minComfortTemp, maxComfortTemp);
@@ -49,12 +49,12 @@ namespace HeatMap
 
 			var gradientSteps = new List<float>();
 			for (int i = 0, t = range.min; i < mappedColorCount; i++, t++)
-				gradientSteps.Add((t >= minComfortTemp - 1 && t <= maxComfortTemp) ? 4 : 1);
+				gradientSteps.Add((t >= minComfortTemp - 1 && t <= maxComfortTemp) ? 4f : 1f);
 
 			return ColorHelper.Gradient(gradientColors, gradientSteps).ToArray();
 		}
 
-		public static (IntRange mappedRange, int minComfortable, int maxComfortable) GetComfortTemperatureRanges()
+		public static (IntRange mappedRange, int comfortTempMin, int comfortTempMax) GetComfortTemperatureRanges()
 		{
 			var human = ThingDefOf.Human;
 			var minComfortTemp = (int)human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin) + 3;

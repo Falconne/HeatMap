@@ -21,7 +21,7 @@
 (default: {default})</FALCHM.ShowOutDoorThermometerDesc>
 
   <FALCHM.ThermometerOpacity>Opacity of thermometer</FALCHM.ThermometerOpacity>
-  <FALCHM.ThermometerOpacityDesc>Reduce this value to make the outdoor temperature thermometer background color more transparent.
+  <FALCHM.ThermometerOpacityDesc>Reduce this value to make the outdoor temperature thermometer background colour more transparent.
 (default: {default}%)</FALCHM.ThermometerOpacityDesc>
 
   <FALCHM.ThermometerFixed>Lock thermometer position</FALCHM.ThermometerFixed>
@@ -40,17 +40,51 @@
   <FALCHM.ShowTemperatureOverRoomsDesc>When overlay is on, this will also display the room temperature over the centre of the room.
 (default: {default})</FALCHM.ShowTemperatureOverRoomsDesc>
 
+  <FALCHM.GradientHue>Colour gradient hue {index}</FALCHM.GradientHue>
+  <FALCHM.GradientHueDesc>Defines which colours will be used for the overlay's colour gradient. Colours are given as hue in degree.
+(default: {default})
+
+- Colours:
+0°/360°	= red
+60°	= yellow
+120°	= green
+180°	= cyan
+240°	= blue
+300°	= magenta
+  
+Each degree of temperature between min/max (default: {min}/{max}) has a relative base step width on the gradient of 1, except for the values between min/max comfort temperature (default: {comfortMin}/{comfortMax}), which have a step width of 4. 
+Each degree of these comfort temperatures takes up four times as much of the colour gradient as one outside of the comfort levels.
+For example, using default settings, green will be used for fewer degrees of temperature than red or blue.</FALCHM.GradientHueDesc>
+
   <FALCHM.UseCustomeRange>Use custom range</FALCHM.UseCustomeRange>
   <FALCHM.UseCustomeRangeDesc>When off, the colour gradient automatically maps to the human comfort range as defined by the game.
 
-When on, allows you to set a custom boundary for the blue and red ends of the gradient, in current temperature units
+When on, custom temperature boundaries for the colour gradient can be set.
 (default: {default})</FALCHM.UseCustomeRangeDesc>
 
   <FALCHM.CustomRangeMin>Custom range min</FALCHM.CustomRangeMin>
-  <FALCHM.CustomRangeMinDesc>Blue end of gradient. Temperatures below this will be blue. Use current temperature units</FALCHM.CustomRangeMinDesc>
+  <FALCHM.CustomRangeMinDesc>Lower temperature limit of the colour gradient. 
+Temperatures below this will be coloured using colour gradient hue 0, default: blue. 
+Uses current temperature units
+(default: {default})</FALCHM.CustomRangeMinDesc>
 
   <FALCHM.CustomRangeMax>Custom range max</FALCHM.CustomRangeMax>
-  <FALCHM.CustomRangeMaxDesc>Red end of gradient. Temperatures above this will be red. Use current temperature units</FALCHM.CustomRangeMaxDesc>
+  <FALCHM.CustomRangeMaxDesc>Upper temperature limit of the colour gradient. 
+Temperatures above this will be coloured using colour gradient hue 4, default: red. 
+Uses current temperature units
+(default: {default})</FALCHM.CustomRangeMaxDesc>
+
+  <FALCHM.CustomRangeComfortMin>Custom comfort range min</FALCHM.CustomRangeComfortMin>
+  <FALCHM.CustomRangeComfortMinDesc>Lower comfort temperature. 
+Between min-max comfort temperature the colour changes four times as quickly as outside these limits, making small changes more noticeable.
+Uses current temperature units
+(default: {default})</FALCHM.CustomRangeComfortMinDesc>
+
+  <FALCHM.CustomRangeComfortMax>Custom comfort range max</FALCHM.CustomRangeComfortMax>
+  <FALCHM.CustomRangeComfortMaxDesc>Upper comfort temperature. 
+Between min-max comfort temperature the colour changes four times as quickly as outside these limits, making small changes more noticeable.
+Uses current temperature units
+(default: {default})</FALCHM.CustomRangeComfortMaxDesc>
 
   <FALCHM.ThermometerTooltip>Outdoor temperature. 
 Click to toggle heat map overlay. 

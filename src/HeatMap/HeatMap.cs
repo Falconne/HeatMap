@@ -45,8 +45,8 @@ namespace HeatMap
         private SettingHandle<bool> _useCustomRange;
         private SettingHandle<int> _customRangeMin;
         private SettingHandle<int> _customRangeMax;
-        private SettingHandle<int> _customRangeComfortableMin;
-        private SettingHandle<int> _customRangeComfortableMax;
+        private SettingHandle<int> _customRangeComfortMin;
+        private SettingHandle<int> _customRangeComfortMax;
 
 
         public bool OverrideVanillaOverlay =>
@@ -61,10 +61,10 @@ namespace HeatMap
             _customRangeMin;
         public int CustomRangeMax =>
             _customRangeMax;
-        public int CustomRangeComfortableMin =>
-            _customRangeComfortableMin;
-        public int CustomRangeComfortableMax =>
-            _customRangeComfortableMax;
+        public int CustomRangeComfortMin =>
+            _customRangeComfortMin;
+        public int CustomRangeComfortMax =>
+            _customRangeComfortMax;
 
         public Color GetGradientColor(int index)
 		{
@@ -262,15 +262,21 @@ namespace HeatMap
                 "FALCHM.ShowTemperatureOverRoomsDesc".Translate(new NamedArgument(true, "default")),
                 true);
 
+            (var mappedRange, var minComfortTemp, var maxComfortTemp) = HeatMapHelper.GetComfortTemperatureRanges();
 
             var gradientValidator = Validators.FloatRangeValidator(0f, 360f);
             for (int i = 0; i < GradientSteps; i++)
             {
                 _gradientHue[i] = Settings.GetHandle(
                     $"gradientHue{i}",
-                    $"FALCHM.GradientHue{i}".Translate(),
-                    $"FALCHM.GradientHueDesc".Translate(new NamedArgument(240f - 60f * i, "default")),
-                    240f - 60f * i, // 240 = blue, 180 = cyan, 120 = green, 60 = yellow, 0 = red
+                    $"FALCHM.GradientHue".Translate(new NamedArgument(i, "index")),
+                    $"FALCHM.GradientHueDesc".Translate(
+                        new NamedArgument(240f - 60f * i, "default"),
+                        new NamedArgument(mappedRange.min, "min"),
+                        new NamedArgument(mappedRange.max, "max"),
+                        new NamedArgument(minComfortTemp, "comfortMin"),
+                        new NamedArgument(maxComfortTemp, "comfortMax")),
+                    240f - 60f * i, // 0° = red, 60° = yellow, 120° = green, 180° = cyan, 240° = blue, 300° = magenta; standard begins at blue (low) and ends at red (high)
                     gradientValidator);
                 _gradientHue[i].ValueChanged += val => ResetAll();
             }
@@ -284,20 +290,17 @@ namespace HeatMap
             _useCustomRange.ValueChanged += val => ResetAll();
 
 
-
-            (var mappedRange, var minComfortTemp, var maxComfortTemp) = HeatMapHelper.GetComfortTemperatureRanges();
-
             _customRangeMin = Settings.GetHandle("customRangeMin", "Unused", "Unused", mappedRange.min);
             _customRangeMin.VisibilityPredicate = () => false;
 
             _customRangeMax = Settings.GetHandle("customRangeMax", "Unused", "Unused", mappedRange.max);
             _customRangeMax.VisibilityPredicate = () => false;
 
-            _customRangeComfortableMin = Settings.GetHandle("customRangeComfortableMin", "Unused", "Unused", minComfortTemp);
-            _customRangeComfortableMin.VisibilityPredicate = () => false;
+            _customRangeComfortMin = Settings.GetHandle("customRangeComfortMin", "Unused", "Unused", minComfortTemp);
+            _customRangeComfortMin.VisibilityPredicate = () => false;
 
-            _customRangeComfortableMax = Settings.GetHandle("customRangeComfortableMax", "Unused", "Unused", maxComfortTemp);
-            _customRangeComfortableMax.VisibilityPredicate = () => false;
+            _customRangeComfortMax = Settings.GetHandle("customRangeComfortMax", "Unused", "Unused", maxComfortTemp);
+            _customRangeComfortMax.VisibilityPredicate = () => false;
 
 
             var customRangeValidator = Validators.IntRangeValidator(
@@ -322,23 +325,23 @@ namespace HeatMap
             customRangeMax.VisibilityPredicate = () => _useCustomRange;
             customRangeMax.Value = (int)GenTemperature.CelsiusTo(_customRangeMax, Prefs.TemperatureMode);
 
-            var customRangeComfortableMin = Settings.GetHandle<int>(
-                "customRangeComfortableMinPlaceholder",
-                "FALCHM.CustomRangeComfortableMin".Translate(),
-                $"{"FALCHM.CustomRangeComfortableMinDesc".Translate(new NamedArgument(minComfortTemp, "default"))} ({Prefs.TemperatureMode.ToStringHuman()})",
+            var customRangeComfortMin = Settings.GetHandle<int>(
+                "customRangeComfortMinPlaceholder",
+                "FALCHM.CustomRangeComfortMin".Translate(),
+                $"{"FALCHM.CustomRangeComfortMinDesc".Translate(new NamedArgument(minComfortTemp, "default"))} ({Prefs.TemperatureMode.ToStringHuman()})",
                 validator: customRangeValidator);
-            customRangeComfortableMin.Unsaved = true;
-            customRangeComfortableMin.VisibilityPredicate = () => _useCustomRange;
-            customRangeComfortableMin.Value = (int)GenTemperature.CelsiusTo(_customRangeComfortableMin, Prefs.TemperatureMode);
+            customRangeComfortMin.Unsaved = true;
+            customRangeComfortMin.VisibilityPredicate = () => _useCustomRange;
+            customRangeComfortMin.Value = (int)GenTemperature.CelsiusTo(_customRangeComfortMin, Prefs.TemperatureMode);
 
-            var customRangeComfortableMax = Settings.GetHandle<int>(
-                "customRangeComfortableMaxPlaceholder",
-                "FALCHM.CustomRangeComfortableMax".Translate(),
-                $"{"FALCHM.CustomRangeComfortableMaxDesc".Translate(new NamedArgument(maxComfortTemp, "default"))} ({Prefs.TemperatureMode.ToStringHuman()})",
+            var customRangeComfortMax = Settings.GetHandle<int>(
+                "customRangeComfortMaxPlaceholder",
+                "FALCHM.CustomRangeComfortMax".Translate(),
+                $"{"FALCHM.CustomRangeComfortMaxDesc".Translate(new NamedArgument(maxComfortTemp, "default"))} ({Prefs.TemperatureMode.ToStringHuman()})",
                 validator: customRangeValidator);
-            customRangeComfortableMax.Unsaved = true;
-            customRangeComfortableMax.VisibilityPredicate = () => _useCustomRange;
-            customRangeComfortableMax.Value = (int)GenTemperature.CelsiusTo(_customRangeComfortableMax, Prefs.TemperatureMode);
+            customRangeComfortMax.Unsaved = true;
+            customRangeComfortMax.VisibilityPredicate = () => _useCustomRange;
+            customRangeComfortMax.Value = (int)GenTemperature.CelsiusTo(_customRangeComfortMax, Prefs.TemperatureMode);
 
 
             customRangeMin.ValueChanged += val =>
@@ -357,14 +360,14 @@ namespace HeatMap
                 _customRangeMax.Value = ConvertToCelcius(customRangeMax);
                 ResetAll();
             };
-            customRangeComfortableMin.ValueChanged += val =>
+            customRangeComfortMin.ValueChanged += val =>
             {
-                _customRangeComfortableMin.Value = ConvertToCelcius(customRangeComfortableMin);
+                _customRangeComfortMin.Value = ConvertToCelcius(customRangeComfortMin);
                 ResetAll();
             };
-            customRangeComfortableMax.ValueChanged += val =>
+            customRangeComfortMax.ValueChanged += val =>
             {
-                _customRangeComfortableMax.Value = ConvertToCelcius(customRangeComfortableMax);
+                _customRangeComfortMax.Value = ConvertToCelcius(customRangeComfortMax);
                 ResetAll();
             };
         }
