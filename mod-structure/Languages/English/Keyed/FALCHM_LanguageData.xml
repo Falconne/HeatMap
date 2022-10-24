@@ -2,49 +2,49 @@
 <LanguageData>
   <FALCHM.OverrideVanillaOverlay>Override vanilla overlay</FALCHM.OverrideVanillaOverlay>
   <FALCHM.OverrideVanillaOverlayDesc>Use Heat Map's overlay instead of the vanilla overlay. 
-(default: on)</FALCHM.OverrideVanillaOverlayDesc>
+(default: {default})</FALCHM.OverrideVanillaOverlayDesc>
 
   <FALCHM.ShowIndoorsOnly>Only overlay indoor areas</FALCHM.ShowIndoorsOnly>
   <FALCHM.ShowIndoorsOnlyDesc>Only show the overlay for indoors areas. 
-(default: on)</FALCHM.ShowIndoorsOnlyDesc>
+(default: {default})</FALCHM.ShowIndoorsOnlyDesc>
 
   <FALCHM.OverlayOpacity>Opacity of overlay</FALCHM.OverlayOpacity>
   <FALCHM.OverlayOpacityDesc>Reduce this value to make the overlay more transparent.
-(default: 30%)</FALCHM.OverlayOpacityDesc>
+(default: {default}%)</FALCHM.OverlayOpacityDesc>
 
   <FALCHM.UpdateDelay>Overlay update delay</FALCHM.UpdateDelay>
   <FALCHM.UpdateDelayDesc>Number of ticks delay between widget and temperature text updates while game is unpaused. Lower numbers provide smoother updates, but may affect performance on low end machines.
-(default: 100)</FALCHM.UpdateDelayDesc>
+(default: {default})</FALCHM.UpdateDelayDesc>
 
   <FALCHM.ShowOutDoorThermometer>Show outdoor thermometer</FALCHM.ShowOutDoorThermometer>
   <FALCHM.ShowOutDoorThermometerDesc>Displays a widget in the top right hand corner of the UI showing current outdoor temperature.
-(default: on)</FALCHM.ShowOutDoorThermometerDesc>
+(default: {default})</FALCHM.ShowOutDoorThermometerDesc>
 
   <FALCHM.ThermometerOpacity>Opacity of thermometer</FALCHM.ThermometerOpacity>
   <FALCHM.ThermometerOpacityDesc>Reduce this value to make the outdoor temperature thermometer background color more transparent.
-(default: 30%)</FALCHM.ThermometerOpacityDesc>
+(default: {default}%)</FALCHM.ThermometerOpacityDesc>
 
   <FALCHM.ThermometerFixed>Lock thermometer position</FALCHM.ThermometerFixed>
   <FALCHM.ThermometerFixedDesc>Locks the thermometer widget in place, disabling shift-click dragging.
-(default: off)</FALCHM.ThermometerFixedDesc>
+(default: {default})</FALCHM.ThermometerFixedDesc>
 
   <FALCHM.ThermometerRight>Right margin of thermometer</FALCHM.ThermometerRight>
   <FALCHM.ThermometerRightDesc>Changes the margin between the thermometer widget and the right of the screen. The widget can be dragged using shift-click while ingame.
-(default: 70)</FALCHM.ThermometerRightDesc>
+(default: {default})</FALCHM.ThermometerRightDesc>
 
   <FALCHM.ThermometerTop>Top margin of thermometer</FALCHM.ThermometerTop>
   <FALCHM.ThermometerTopDesc>Changes the margin between the thermometer widget and the top of the screen. The widget can be dragged using shift-click while ingame.
-(default: 8)</FALCHM.ThermometerTopDesc>
+(default: {default})</FALCHM.ThermometerTopDesc>
 
   <FALCHM.ShowTemperatureOverRooms>Show temperature over rooms</FALCHM.ShowTemperatureOverRooms>
   <FALCHM.ShowTemperatureOverRoomsDesc>When overlay is on, this will also display the room temperature over the centre of the room.
-(default: on)</FALCHM.ShowTemperatureOverRoomsDesc>
+(default: {default})</FALCHM.ShowTemperatureOverRoomsDesc>
 
   <FALCHM.UseCustomeRange>Use custom range</FALCHM.UseCustomeRange>
   <FALCHM.UseCustomeRangeDesc>When off, the colour gradient automatically maps to the human comfort range as defined by the game.
 
 When on, allows you to set a custom boundary for the blue and red ends of the gradient, in current temperature units
-(default: off)</FALCHM.UseCustomeRangeDesc>
+(default: {default})</FALCHM.UseCustomeRangeDesc>
 
   <FALCHM.CustomRangeMin>Custom range min</FALCHM.CustomRangeMin>
   <FALCHM.CustomRangeMinDesc>Blue end of gradient. Temperatures below this will be blue. Use current temperature units</FALCHM.CustomRangeMinDesc>
