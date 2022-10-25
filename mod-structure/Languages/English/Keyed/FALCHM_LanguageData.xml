@@ -52,9 +52,9 @@
 240°	= blue
 300°	= magenta
   
-Each degree of temperature between min/max (default: {min}/{max}) has a relative base step width on the gradient of 1, except for the values between min/max comfort temperature (default: {comfortMin}/{comfortMax}), which have a step width of 4. 
-Each degree of these comfort temperatures takes up four times as much of the colour gradient as one outside of the comfort levels.
-For example, using default settings, green will be used for fewer degrees of temperature than red or blue.</FALCHM.GradientHueDesc>
+Each degree of temperature between min/max (default: {min} to {max} °C) has a relative gradient step width of 1, except for the values between min/max comfort temperature (default: {comfortMin} to {comfortMax} °C), which have a step width of 4. 
+I.e. each degree of the comfort temperature range takes up four times as much on the colour gradient as one outside of the comfort levels.
+For example when using default settings green will be applied to a smaller temperature range than red or blue.</FALCHM.GradientHueDesc>
 
   <FALCHM.UseCustomeRange>Use custom range</FALCHM.UseCustomeRange>
   <FALCHM.UseCustomeRangeDesc>When off, the colour gradient automatically maps to the human comfort range as defined by the game.
