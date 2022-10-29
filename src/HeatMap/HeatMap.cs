@@ -1,215 +1,336 @@
-﻿using System;
+﻿using HugsLib.Settings;
+using HugsLib.Utils;
 using RimWorld;
+using RimWorld.Planet;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using Verse;
 
 namespace HeatMap
 {
-    public class HeatMap : ICellBoolGiver
+    public class HeatMap : HugsLib.ModBase
     {
+        internal new ModLogger Logger => base.Logger;
+
+        internal static HeatMap Instance { get; private set; }
+
+        public override string ModIdentifier => "HeatMap";
+
+        public RoomTemperatureDisplayer TemperatureDisplayer { get; } = new RoomTemperatureDisplayer();
+
+        private const float _boxSize = 62f;
+        private bool _draggingThermometer = false;
+        private float _dragThermometerRight = 0f;
+        private float _dragThermometerTop = 0f;
+
+        private readonly Dictionary<int, Texture2D> _temperatureTextureCache = new Dictionary<int, Texture2D>();
+
+        private SettingHandle<bool> _overrideVanillaOverlay;
+        private SettingHandle<bool> _showIndoorsOnly;
+        private SettingHandle<int> _opacity;
+        private SettingHandle<int> _updateDelay;
+
+        private SettingHandle<bool> _showOutdoorThermometer;
+        private SettingHandle<int> _outdoorThermometerOpacity;
+        private SettingHandle<bool> _outdoorThermometerFixed;
+        private SettingHandle<float> _outdoorThermometerRight;
+        private SettingHandle<float> _outdoorThermometerTop;
+
+        private SettingHandle<bool> _showTemperatureOverRooms;
+
+        private SettingHandle<bool> _useCustomRange;
+        private SettingHandle<int> _customRangeMin;
+        private SettingHandle<int> _customRangeMax;
+
+
+        public bool OverrideVanillaOverlay =>
+            _overrideVanillaOverlay;
+        public bool ShowIndoorsOnly =>
+            _showIndoorsOnly;
+        public float OverlayOpacity =>
+            _opacity / 100f;
+        public bool ShouldUseCustomRange =>
+            _useCustomRange;
+        public int CustomRangeMin =>
+            _customRangeMin;
+        public int CustomRangeMax =>
+            _customRangeMax;
+
+
         public HeatMap()
         {
-            if (Main.Instance.ShouldUseCustomRange())
-                CreateCustomMap();
-            else
-                CreateComfortMap();
+            Instance = this;
         }
 
-        public void CreateCustomMap()
+		public void UpdateOutdoorThermometer()
         {
-            _mappedTemperatureRange = new IntRange(
-                Main.Instance.GetCustomRangeMin(), Main.Instance.GetCustomRangeMax());
+            if (!_showOutdoorThermometer)
+                return;
 
-            var mappedColorCount = _mappedTemperatureRange.max - _mappedTemperatureRange.min;
-            _mappedColors = new Color[mappedColorCount];
+			var right = Mathf.Clamp(_draggingThermometer ? _dragThermometerRight : _outdoorThermometerRight, _boxSize, UI.screenWidth);
+			var top = Mathf.Clamp(_draggingThermometer ? _dragThermometerTop : _outdoorThermometerTop, 0, UI.screenHeight - _boxSize);
+			var outRect = new Rect(UI.screenWidth - right, top, _boxSize, _boxSize);
+			if (TutorSystem.AdaptiveTrainingEnabled && Find.PlaySettings.showLearningHelper)
+			{
+				if (typeof(LearningReadout).GetField("windowRect", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(Find.Tutor.learningReadout) is Rect helpRect
+					&& helpRect.Overlaps(outRect) == true)
+						outRect.x = helpRect.x - _boxSize - 5f;
+			}
 
-            var delta = 2f / (mappedColorCount - 1);
-            var channelR = -1f;
-            var channelG = 0f;
-            var channelB = 1f;
-            var greenRising = true;
+			if (!_outdoorThermometerFixed && Event.current.isMouse)
+			{
+				switch (Event.current.type)
+				{
+					case EventType.MouseDown:
+						if (Mouse.IsOver(outRect) && Event.current.modifiers == EventModifiers.Shift)
+						{
+							Event.current.Use();
 
-            for (var i = 0; i < mappedColorCount - 1; i++)
+							_dragThermometerRight = _outdoorThermometerRight.Value;
+							_dragThermometerTop = _outdoorThermometerTop.Value;
+
+							_draggingThermometer = true;
+						}
+						break;
+					case EventType.MouseDrag:
+						if (_draggingThermometer)
+						{
+							Event.current.Use();
+							
+							_dragThermometerRight -= Event.current.delta.x;
+							_dragThermometerRight = Mathf.Clamp(_dragThermometerRight, _boxSize, UI.screenWidth);
+							_dragThermometerTop += Event.current.delta.y;
+							_dragThermometerTop = Mathf.Clamp(_dragThermometerTop, 0, UI.screenHeight - _boxSize);
+							//outRect = new Rect(outRect.x - _dragThermometerRight, outRect.y + _dragThermometerTop, _boxSize, _boxSize); // repositioning is processed on next update
+						}
+						break;
+					case EventType.MouseUp:
+						if (_draggingThermometer)
+						{
+							Event.current.Use();
+
+							_outdoorThermometerRight.Value = _dragThermometerRight;
+							_outdoorThermometerTop.Value = _dragThermometerTop;
+
+							_draggingThermometer = false;
+						}
+						break;
+				}
+			}
+			
+			var temperature = Find.CurrentMap.mapTemperature.OutdoorTemp;
+            var textureIndex = HeatMapHelper.GetIndexForTemperature(temperature);
+            if (!_temperatureTextureCache.ContainsKey(textureIndex))
             {
-                var realR = Math.Min(channelR, 1f);
-                realR = Math.Max(realR, 0f);
+                var backColor = HeatMapHelper.GetColorForTemperature(temperature);
+                backColor.a = _outdoorThermometerOpacity / 100f;
+                _temperatureTextureCache[textureIndex] = SolidColorMaterials.NewSolidColorTexture(backColor);
+            }
+            GUI.DrawTexture(outRect, _temperatureTextureCache[textureIndex]);
+            GUI.DrawTexture(outRect, Resources.DisplayBoder);
 
-                var realG = Math.Min(channelG, 1f);
-                realG = Math.Max(realG, 0f);
+            var temperatureForDisplay = temperature.ToStringTemperature("F0");
+            Text.Font = GameFont.Medium;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            GUI.color = Color.white;
+            Widgets.Label(outRect, temperatureForDisplay);
 
-                var realB = Math.Min(channelB, 1f);
-                realB = Math.Max(realB, 0f);
+            if (Widgets.ButtonInvisible(outRect))
+                Find.PlaySettings.showTemperatureOverlay = !Find.PlaySettings.showTemperatureOverlay;
 
-                _mappedColors[i] = new Color(realR, realG, realB);
+            TooltipHandler.TipRegion(outRect, "FALCHM.ThermometerTooltip".Translate());
 
-                if (channelG >= 1f)
-                    greenRising = false;
+            Text.Anchor = TextAnchor.UpperLeft;
+        }
 
-                channelR += delta;
-                channelG += greenRising ? delta : -delta;
-                channelB -= delta;
+        public override void OnGUI()
+        {
+            if (Current.ProgramState != ProgramState.Playing 
+                || Find.CurrentMap == null 
+                || WorldRendererUtility.WorldRenderedNow)
+                return;
+
+            UpdateOutdoorThermometer();
+            if (Find.PlaySettings.showTemperatureOverlay && _showTemperatureOverRooms)
+            {
+                TemperatureDisplayer.Update(_updateDelay);
+                TemperatureDisplayer.OnGUI();
             }
 
-            // Force high end to be red (or else if the temperature range is an even number,
-            // the green channel will not go down to zero in above loop).
-            _mappedColors[mappedColorCount - 1] = Color.red;
-        }
+            if (Event.current.type != EventType.KeyDown || Event.current.keyCode == KeyCode.None)
+                return;
 
-        public void CreateComfortMap()
-        {
-            var minComfortTemp = (int)ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMin) + 3;
-            var maxComfortTemp = (int)ThingDefOf.Human.GetStatValueAbstract(StatDefOf.ComfyTemperatureMax) - 3;
-
-            // Narrow down the green range to a quarter scale, to make boundary temps stand out more.
-
-            var comfortDoubleRange = (maxComfortTemp - minComfortTemp) * 2;
-            _mappedTemperatureRange = new IntRange(
-                minComfortTemp - comfortDoubleRange, maxComfortTemp + comfortDoubleRange);
-
-            var mappedColorCount = _mappedTemperatureRange.max - _mappedTemperatureRange.min;
-            _mappedColors = new Color[mappedColorCount];
-
-            var channelDelta = 1f / comfortDoubleRange;
-            var channelR = -2f;
-            var channelG = 0f;
-            var channelB = 2f;
-            var greenRising = true;
-
-            var mappingTemperature = _mappedTemperatureRange.min;
-            for (var i = 0; i < mappedColorCount - 1; i++, mappingTemperature++)
+            if (HeatMapKeyBingings.ToggleHeatMap.JustPressed)
             {
-                var realR = Math.Min(channelR, 1f);
-                realR = Math.Max(realR, 0f);
+                if (WorldRendererUtility.WorldRenderedNow)
+                    return;
 
-                var realG = Math.Min(channelG, 1f);
-                realG = Math.Max(realG, 0f);
-
-                var realB = Math.Min(channelB, 1f);
-                realB = Math.Max(realB, 0f);
-
-                _mappedColors[i] = new Color(realR, realG, realB);
-
-                if (channelG >= 2f)
-                    greenRising = false;
-
-                var delta = channelDelta;
-                if (mappingTemperature >= minComfortTemp - 1 &&
-                    mappingTemperature <= maxComfortTemp)
-                {
-                    delta *= 4;
-                }
-
-                channelR += delta;
-                channelG += greenRising ? delta : -delta;
-                channelB -= delta;
-            }
-
-            // Force high end to be red (or else if the temperature range is an even number,
-            // the green channel will not go down to zero in above loop).
-            _mappedColors[mappedColorCount - 1] = Color.red;
-        }
-
-        public CellBoolDrawer Drawer
-        {
-            get
-            {
-                if (_drawerInt == null)
-                {
-                    var map = Find.CurrentMap;
-                    _drawerInt = new CellBoolDrawer(this, map.Size.x, map.Size.z,
-                        Main.Instance.GetConfiguredOpacity());
-                }
-                return _drawerInt;
+                Find.PlaySettings.showTemperatureOverlay = !Find.PlaySettings.showTemperatureOverlay;
             }
         }
 
-        public bool GetCellBool(int index)
+        public override void WorldLoaded()
         {
-            var map = Find.CurrentMap;
-            if (map.fogGrid.IsFogged(index))
-                return false;
-
-            var room = map.cellIndices.IndexToCell(index).GetRoom(map);
-
-            if (room != null && !room.PsychologicallyOutdoors)
-            {
-                _nextColor = GetColorForTemperature(room.Temperature);
-                return true;
-            }
-
-            return false;
+            ResetAll();
         }
 
-        public int GetIndexForTemperature(float temperature)
+        public override void DefsLoaded()
         {
-            // These two checks are probably not needed due to array index boundary checks
-            // below, but too worried to remove them now.
-            if (temperature <= _mappedTemperatureRange.min)
+            _overrideVanillaOverlay = Settings.GetHandle(
+                "overrideVanillaOverlay",
+                "FALCHM.OverrideVanillaOverlay".Translate(),
+                "FALCHM.OverrideVanillaOverlayDesc".Translate(),
+                true);
+            _overrideVanillaOverlay.ValueChanged += 
+                val => ResetAll();
+
+            _showIndoorsOnly = Settings.GetHandle(
+                "showRoomsOnly",
+                "FALCHM.ShowIndoorsOnly".Translate(),
+                "FALCHM.ShowIndoorsOnlyDesc".Translate(),
+                true);
+            _showIndoorsOnly.ValueChanged += 
+                val => ResetAll();
+
+            _opacity = Settings.GetHandle(
+                "opacity", "FALCHM.OverlayOpacity".Translate(),
+                "FALCHM.OverlayOpacityDesc".Translate(), 30,
+                Validators.IntRangeValidator(0, 100));
+            _opacity.ValueChanged += 
+                val => ResetAll();
+
+            _updateDelay = Settings.GetHandle("updateDelay",
+                "FALCHM.UpdateDelay".Translate(),
+                "FALCHM.UpdateDelayDesc".Translate(),
+                100,
+                Validators.IntRangeValidator(1, 9999));
+
+
+            _showOutdoorThermometer = Settings.GetHandle(
+                "showOutdoorThermometer",
+                "FALCHM.ShowOutDoorThermometer".Translate(),
+                "FALCHM.ShowOutDoorThermometerDesc".Translate(),
+                true);
+
+            _outdoorThermometerOpacity = Settings.GetHandle(
+                "outdoorThermometerOpacity",
+                "FALCHM.ThermometerOpacity".Translate(),
+                "FALCHM.ThermometerOpacityDesc".Translate(),
+                30,
+                Validators.IntRangeValidator(1, 100));
+            _outdoorThermometerOpacity.ValueChanged += 
+                val => _temperatureTextureCache.Clear();
+
+			_outdoorThermometerFixed = Settings.GetHandle(
+				"outdoorThermometerFixed",
+				"FALCHM.ThermometerFixed".Translate(),
+				"FALCHM.ThermometerFixedDesc".Translate(),
+                false);
+
+			_outdoorThermometerRight = Settings.GetHandle(
+				"outdoorThermometerRight",
+				"FALCHM.ThermometerRight".Translate(),
+				"FALCHM.ThermometerRightDesc".Translate(),
+				8f + _boxSize);
+
+			_outdoorThermometerTop = Settings.GetHandle(
+				"outdoorThermometerTop",
+				"FALCHM.ThermometerTop".Translate(),
+				"FALCHM.ThermometerTopDesc".Translate(),
+				8f);
+
+
+			_showTemperatureOverRooms = Settings.GetHandle(
+                "showTemperatureOverRooms",
+                "FALCHM.ShowTemperatureOverRooms".Translate(),
+                "FALCHM.ShowTemperatureOverRoomsDesc".Translate(),
+                true);
+
+
+            _useCustomRange = Settings.GetHandle(
+                "useCustomeRange",
+                "FALCHM.UseCustomeRange".Translate(),
+                "FALCHM.UseCustomeRangeDesc".Translate(),
+                false);
+            _useCustomRange.ValueChanged += 
+                val => ResetAll();
+
+
+            _customRangeMin = Settings.GetHandle("customRangeMin", "Unused", "Unused", 0);
+            _customRangeMax = Settings.GetHandle("customRangeMax", "Unused", "Unused", 40);
+
+            _customRangeMin.VisibilityPredicate = () => false;
+            _customRangeMax.VisibilityPredicate = () => false;
+
+
+            var customRangeValidator = Validators.IntRangeValidator(
+                (int)GenTemperature.CelsiusTo(-100, Prefs.TemperatureMode),
+                (int)GenTemperature.CelsiusTo(100, Prefs.TemperatureMode));
+
+            var customRangeMin = Settings.GetHandle(
+                "customRangeMinPlaceholder",
+                "FALCHM.CustomRangeMin".Translate(),
+                $"{"FALCHM.CustomRangeMinDesc".Translate()} ({Prefs.TemperatureMode.ToStringHuman()})",
+                (int)GenTemperature.CelsiusTo(_customRangeMin, Prefs.TemperatureMode),
+                customRangeValidator);
+
+            customRangeMin.Unsaved = true;
+            customRangeMin.VisibilityPredicate = () => _useCustomRange;
+
+            var customRangeMax = Settings.GetHandle(
+                "customRangeMaxPlaceholder",
+                "FALCHM.CustomRangeMax".Translate(),
+                $"{"FALCHM.CustomRangeMaxDesc".Translate()} ({Prefs.TemperatureMode.ToStringHuman()})",
+                (int)GenTemperature.CelsiusTo(_customRangeMax, Prefs.TemperatureMode),
+                customRangeValidator);
+
+            customRangeMax.Unsaved = true;
+            customRangeMax.VisibilityPredicate = () => _useCustomRange;
+
+
+            customRangeMin.ValueChanged += val =>
             {
-                return 0;
-            }
+                if (customRangeMax <= customRangeMin)
+                    customRangeMax.Value = customRangeMin + 1;
 
-            if (temperature >= _mappedTemperatureRange.max)
+                _customRangeMin.Value = ConvertToCelcius(customRangeMin);
+                ResetAll();
+            };
+
+            customRangeMax.ValueChanged += val =>
             {
-                return _mappedColors.Length - 1;
-            }
+                if (customRangeMin >= customRangeMax)
+                    customRangeMin.Value = customRangeMax - 1;
 
-            var colorMapIndex = (int)temperature - _mappedTemperatureRange.min;
-            if (colorMapIndex <= 0)
-            {
-                return 0;
-            }
-
-            if (colorMapIndex >= _mappedColors.Length)
-            {
-                return _mappedColors.Length - 1;
-            }
-
-            return colorMapIndex;
-
+                _customRangeMax.Value = ConvertToCelcius(customRangeMax);
+                ResetAll();
+            };
         }
 
-        public Color GetColorForTemperature(float temperature)
+		public void ResetAll()
         {
-            return _mappedColors[GetIndexForTemperature(temperature)];
+            HeatMapHelper.RegenerateColorMap();
+            TemperatureDisplayer.Reset();
+            _temperatureTextureCache.Clear();
+
+            Find.CurrentMap?.mapTemperature?.Drawer?.SetDirty();
         }
 
-        public Color GetCellExtraColor(int index)
+        private static int ConvertToCelcius(int value)
         {
-            return _nextColor;
-        }
-
-        public Color Color => Color.white;
-
-        public void Update(int updateDelay)
-        {
-            if (Main.Instance.ShowHeatMap)
+            switch (Prefs.TemperatureMode)
             {
-                Drawer.MarkForDraw();
-                var tick = Find.TickManager.TicksGame;
-                if (tick >= _nextUpdateTick)
-                {
-                    Drawer.SetDirty();
-                    _nextUpdateTick = tick + updateDelay;
-                }
-				Drawer.CellBoolDrawerUpdate();
+                default:
+                case TemperatureDisplayMode.Celsius:
+                    return value;
+
+                case TemperatureDisplayMode.Kelvin:
+                    return value - 273;
+
+                case TemperatureDisplayMode.Fahrenheit:
+                    return (int)((value - 32) / 1.8f);
             }
         }
-
-        public void Reset()
-        {
-            _drawerInt = null;
-            _nextUpdateTick = 0;
-        }
-
-        private CellBoolDrawer _drawerInt;
-
-        private IntRange _mappedTemperatureRange;
-
-        private Color[] _mappedColors;
-
-        private Color _nextColor;
-
-        private int _nextUpdateTick;
     }
 }
